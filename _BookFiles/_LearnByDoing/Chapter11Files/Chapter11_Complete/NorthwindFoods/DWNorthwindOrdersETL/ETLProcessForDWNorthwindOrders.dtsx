@@ -1,0 +1,2044 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/24/2012 4:02:45 PM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="RSLAPTOP2"
+  DTS:CreatorName="RSLaptop2\Administrator"
+  DTS:DTSID="{ED194BBF-F7AC-4B4B-8EDC-DDC84E9F5703}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.2100.60"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="ETLProcessForDWNorthwindOrders"
+  DTS:PackageType="5"
+  DTS:VersionBuild="25"
+  DTS:VersionGUID="{0A38B6F8-524F-458B-B90A-EFFDB6449D3C}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DWNorthwindOrders]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{86E7063C-D345-4618-A46B-E6ACC8E64F57}"
+      DTS:ObjectName="DWNorthwindOrders">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=(local);Initial Catalog=DWNorthwindOrders;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Northwind]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{581FE610-A4E0-4B7B-A0B6-8C095302A2FB}"
+      DTS:ObjectName="Northwind">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=(local);Initial Catalog=Northwind;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\End ETL Process Sequence Container"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{57512A64-DDD0-41A7-8755-9B3B7F3BA8C8}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="End ETL Process Sequence Container">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\End ETL Process Sequence Container\Add Foreign Key Constraints Execute SQL Task"
+          DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{84DD3850-4DC5-4B61-9BF6-F208240B9CD9}"
+          DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Add Foreign Key Constraints Execute SQL Task"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{86E7063C-D345-4618-A46B-E6ACC8E64F57}"
+              SQLTask:SqlStatementSource="-- Step 3) Add Foreign Key s back (Will be used with SSIS Execute SQL Tasks)&#xA;-- Used with Execute SQL Task &quot;Add Foreign Key Constraints&quot;&#xA;ALTER TABLE dbo.DimEmployees ADD CONSTRAINT&#xA;&#x9;FK_DimEmployees_DimEmployees FOREIGN KEY&#xA;&#x9;(&#xA;&#x9;[ManagerKey]&#xA;&#x9;) REFERENCES dbo.DimEmployees&#xA;&#x9;(&#xA;&#x9;EmployeeKey&#xA;&#x9;) &#xA;&#xA;&#xA;ALTER TABLE dbo.FactOrders ADD CONSTRAINT&#xA;&#x9;FK_FactOrders_DimCustomers FOREIGN KEY&#xA;&#x9;(CustomerKey) REFERENCES dbo.DimCustomers(CustomerKey) &#xA;&#xA;ALTER TABLE dbo.FactOrders ADD CONSTRAINT&#xA;&#x9;FK_FactOrders_DimEmployees FOREIGN KEY&#xA;&#x9;(EmployeeKey) REFERENCES dbo.DimEmployees(EmployeeKey) &#xA;&#xA;ALTER TABLE dbo.FactOrders ADD CONSTRAINT&#xA;&#x9;FK_FactOrders_DimProducts FOREIGN KEY&#xA;&#x9;(ProductKey) REFERENCES dbo.DimProducts(ProductKey) &#xA;&#xA;ALTER TABLE dbo.FactOrders ADD CONSTRAINT&#xA;&#x9;FK_FactOrders_DimDates_OrderDate FOREIGN KEY&#xA;&#x9;(OrderDateKey) REFERENCES dbo.DimDates([DateKey]) &#xA;&#xA;ALTER TABLE dbo.FactOrders ADD CONSTRAINT&#xA;&#x9;FK_FactOrders_DimDates_RequiredDate FOREIGN KEY&#xA;&#x9;(RequiredDateKey) REFERENCES dbo.DimDates([DateKey]) &#xA;&#xA;ALTER TABLE dbo.FactOrders ADD CONSTRAINT&#xA;&#x9;FK_FactOrders_DimDates_ShippedDate FOREIGN KEY&#xA;&#x9;(ShippedDateKey) REFERENCES dbo.DimDates([DateKey]) &#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Fill Dimension Tables Sequence Container"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{92AD15A6-C043-43B2-B685-9B7D75DDDDCB}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Fill Dimension Tables Sequence Container">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Fill Dimension Tables Sequence Container\Add Null Date Lookup Values Execute SQL Task"
+          DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{B81C6BD7-67F0-4181-B81E-A3AEC0E44F51}"
+          DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Add Null Date Lookup Values Execute SQL Task"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{86E7063C-D345-4618-A46B-E6ACC8E64F57}"
+              SQLTask:SqlStatementSource="&#xA;-- 2e) Add additional lookup values to DimDates&#xA;-- Used with Execute SQL Task &quot;Add Null Date Lookup Values&quot;&#xA;Set Identity_Insert [DWNorthwindOrders].[dbo].[DimDates] On&#xA;Insert Into [DWNorthwindOrders].[dbo].[DimDates] &#xA;  ( [DateKey]&#xA;  , [Date]&#xA;  , [DateName]&#xA;  , [Month]&#xA;  , [MonthName]&#xA;  , [Quarter]&#xA;  , [QuarterName]&#xA;  , [Year], [YearName] )&#xA;  Select &#xA;    [DateKey] = -1&#xA;  , [Date] =  Cast('01/01/1900' as nVarchar(50) )&#xA;  , [DateName] = Cast('Unknown Day' as nVarchar(50) )&#xA;  , [Month] = -1&#xA;  , [MonthName] = Cast('Unknown Month' as nVarchar(50) )&#xA;  , [Quarter] =  -1&#xA;  , [QuarterName] = Cast('Unknown Quarter' as nVarchar(50) )&#xA;  , [Year] = -1&#xA;  , [YearName] = Cast('Unknown Year' as nVarchar(50) )&#xA;  Union&#xA;  Select &#xA;    [DateKey] = -2&#xA;  , [Date] = Cast('01/02/1900' as nVarchar(50) )&#xA;  , [DateName] = Cast('Corrupt Day' as nVarchar(50) )&#xA;  , [Month] = -2&#xA;  , [MonthName] = Cast('Corrupt Month' as nVarchar(50) )&#xA;  , [Quarter] =  -2&#xA;  , [QuarterName] = Cast('Corrupt Quarter' as nVarchar(50) )&#xA;  , [Year] = -2&#xA;  , [YearName] = Cast('Corrupt Year' as nVarchar(50) )&#xA;  Set Identity_Insert [DWNorthwindOrders].[dbo].[DimDates] Off" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task"
+          DTS:CreationName="SSIS.Pipeline.3"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{B640FF28-DF2A-4C27-9795-A662E6F6D598}"
+          DTS:ExecutableType="SSIS.Pipeline.3"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Fill DimCustomers Data Flow Task"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source"
+                  componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="Get Customer Data OLE DB Source"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset"></property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">Select 
+    CustomerID = CustomerID
+  , CustomerName = Cast( CompanyName as nVarchar(100) )
+  , CustomerCity = Cast( City as nVarchar(50) )
+  , CustomerRegion = Cast( IsNull(Region, Country) as nVarchar(50) )
+  , CustomerCountry = Cast( Country as nVarchar(50) )
+From Northwind.dbo.Customers</property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[DWNorthwindOrders]"
+                      connectionManagerRefId="Package.ConnectionManagers[DWNorthwindOrders]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerID]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerID]"
+                          length="5"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerID]"
+                          name="CustomerID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerName]"
+                          length="100"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerName]"
+                          name="CustomerName"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerCity]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerCity]"
+                          length="50"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerCity]"
+                          name="CustomerCity"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerRegion]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerRegion]"
+                          length="50"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerRegion]"
+                          name="CustomerRegion"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerCountry]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerCountry]"
+                          length="50"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerCountry]"
+                          name="CustomerCountry"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerID]"
+                          dataType="wstr"
+                          length="5"
+                          name="CustomerID" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerName]"
+                          dataType="wstr"
+                          length="100"
+                          name="CustomerName" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerCity]"
+                          dataType="wstr"
+                          length="50"
+                          name="CustomerCity" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerRegion]"
+                          dataType="wstr"
+                          length="50"
+                          name="CustomerRegion" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerCountry]"
+                          dataType="wstr"
+                          length="50"
+                          name="CustomerCountry" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerID]"
+                          dataType="wstr"
+                          length="5"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerID]"
+                          name="CustomerID" />
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerName]"
+                          dataType="wstr"
+                          length="100"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerName]"
+                          name="CustomerName" />
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerCity]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerCity]"
+                          name="CustomerCity" />
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerRegion]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerRegion]"
+                          name="CustomerRegion" />
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerCountry]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerCountry]"
+                          name="CustomerCountry" />
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination"
+                  componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="Load DimCustomers OLE DB Destination"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[DimCustomers]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[DWNorthwindOrders]"
+                      connectionManagerRefId="Package.ConnectionManagers[DWNorthwindOrders]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CustomerID]"
+                          cachedDataType="wstr"
+                          cachedLength="5"
+                          cachedName="CustomerID"
+                          externalMetadataColumnId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CustomerID]"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerID]" />
+                        <inputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CustomerName]"
+                          cachedDataType="wstr"
+                          cachedLength="100"
+                          cachedName="CustomerName"
+                          externalMetadataColumnId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CustomerName]"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerName]" />
+                        <inputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CustomerCity]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="CustomerCity"
+                          externalMetadataColumnId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CustomerCity]"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerCity]" />
+                        <inputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CustomerRegion]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="CustomerRegion"
+                          externalMetadataColumnId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CustomerRegion]"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerRegion]" />
+                        <inputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CustomerCountry]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="CustomerCountry"
+                          externalMetadataColumnId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CustomerCountry]"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerCountry]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CustomerKey]"
+                          dataType="i4"
+                          name="CustomerKey" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CustomerID]"
+                          dataType="wstr"
+                          length="5"
+                          name="CustomerID" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CustomerName]"
+                          dataType="wstr"
+                          length="100"
+                          name="CustomerName" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CustomerCity]"
+                          dataType="wstr"
+                          length="50"
+                          name="CustomerCity" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CustomerRegion]"
+                          dataType="wstr"
+                          length="50"
+                          name="CustomerRegion" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CustomerCountry]"
+                          dataType="wstr"
+                          length="50"
+                          name="CustomerCountry" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task.Paths[OLE DB Source Output]"
+                  endId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Fill Dimension Tables Sequence Container\Fill DimDates Execute SQL Task"
+          DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{68CAA6B9-A307-4E52-87FB-CA6D54C3B5D6}"
+          DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Fill DimDates Execute SQL Task"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{86E7063C-D345-4618-A46B-E6ACC8E64F57}"
+              SQLTask:SqlStatementSource="-- 2d) Create values for DimDates.&#xA;-- Used with Execute SQL Task &quot;Fill DimDates&quot;&#xA;-- Create variables to hold the start and end date&#xA;Declare @StartDate datetime = '01/01/1995'&#xA;Declare @EndDate datetime = '01/01/2000' &#xA;&#xA;-- Use a while loop to add dates to the table&#xA;Declare @DateInProcess datetime&#xA;Set @DateInProcess = @StartDate&#xA;&#xA;While @DateInProcess &lt;= @EndDate&#xA; Begin&#xA; -- Add a row into the date dimension table for this date&#xA; Insert Into DimDates &#xA; ( [Date], [DateName], [Month], [MonthName], [Quarter], [QuarterName], [Year], [YearName] )&#xA; Values ( &#xA;  @DateInProcess -- [Date]&#xA;  , DateName( weekday, @DateInProcess ) + ', ' + Cast(@DateInProcess as nVarchar(20)) -- [DateName]  &#xA;  , Month( @DateInProcess ) -- [Month]   &#xA;  , DateName( month, @DateInProcess ) -- [MonthName]&#xA;  , DateName( quarter, @DateInProcess ) -- [Quarter]&#xA;  , 'Q' + DateName( quarter, @DateInProcess ) + ' - ' + Cast( Year(@DateInProcess) as nVarchar(50) ) -- [QuarterName] &#xA;  , Year( @DateInProcess ) -- [Year] &#xA;  , Cast( Year(@DateInProcess ) as nVarchar(50) ) -- [YearName] &#xA;  )  &#xA; -- Add a day and loop again&#xA; Set @DateInProcess = DateAdd(d, 1, @DateInProcess)&#xA; End" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Fill Dimension Tables Sequence Container\Fill DimEmployees Execute SQL Task"
+          DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{7F0E6838-BC37-4A83-910A-E84FCF587EB2}"
+          DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Fill DimEmployees Execute SQL Task"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{86E7063C-D345-4618-A46B-E6ACC8E64F57}"
+              SQLTask:SqlStatementSource="-- 2b) Get source data from Northwind.dbo.Employees &#xA;-- Used with Execute Task &quot;Fill DimEmployees&quot;&#xA;-- Step 1: Import data and get Surrogate Key values&#xA;INSERT INTO DimEmployees&#xA;(EmployeeID, EmployeeName, ManagerKey, ManagerID)&#xA;&#x9;SELECT &#xA;&#x9; [EmployeeID]&#xA;&#x9;,[EmployeeName] = Cast([FirstName] + ' ' + [LastName] as nVarchar(100))&#xA;&#x9;,[ManagerKey] = IsNull([ReportsTo], [EmployeeID]) &#xA;&#x9;,[ManagerID] = IsNull([ReportsTo], [EmployeeID]) &#xA;&#x9;FROM [Northwind].[dbo].[Employees]&#xA;-- Step 2: Get Surrogate values for the ManagerKeys&#xA;Select Mgr.* , Emp.EmployeeKey as NewMgrKey&#xA;Into #EmpTemp&#xA;FROM dbo.DimEmployees as Emp&#xA;JOIN  dbo.DimEmployees as Mgr&#xA;&#x9;On Emp.EmployeeId = Mgr.ManagerKey&#xA;-- Step 3: Update the table with Surrogate Key values&#xA;UPDATE DimEmployees&#xA;Set DimEmployees.[ManagerKey] =  #EmpTemp.NewMgrKey&#xA;FROM DimEmployees&#xA;JOIN #EmpTemp &#xA;On  DimEmployees.[ManagerKey] = #EmpTemp.[ManagerKey]&#xA;-- Step 4: Drop the Temp Table&#xA;Drop Table #EmpTemp&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task"
+          DTS:CreationName="SSIS.Pipeline.3"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{5E4221B5-9A78-416A-9F50-780F24629262}"
+          DTS:ExecutableType="SSIS.Pipeline.3"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Fill DimProducts Data Flow Task"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source"
+                  componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="Get Products Data OLE DB Source"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset"></property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">Select 
+  ProductID = ProductId
+, ProductName = Cast( ProductName as nVarchar(100) )
+, ProductCategory = Cast( CategoryName as nVarchar(100) )
+, ProductStdPrice =  Cast( UnitPrice as Decimal(18,4) )
+, ProductIsDiscontinued = Cast( (Case When Discontinued  = 1 Then 'T' Else 'F' End ) as nChar(1))
+From Northwind.dbo.Products as P
+Join Northwind.dbo.Categories as C
+  On P.CategoryId  = C.CategoryId</property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[Northwind]"
+                      connectionManagerRefId="Package.ConnectionManagers[Northwind]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductID]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductID]"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductID]"
+                          name="ProductID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductName]"
+                          length="100"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductName]"
+                          name="ProductName"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductCategory]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductCategory]"
+                          length="100"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductCategory]"
+                          name="ProductCategory"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductStdPrice]"
+                          dataType="numeric"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductStdPrice]"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductStdPrice]"
+                          name="ProductStdPrice"
+                          precision="18"
+                          scale="4"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductIsDiscontinued]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductIsDiscontinued]"
+                          length="1"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductIsDiscontinued]"
+                          name="ProductIsDiscontinued"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductID]"
+                          dataType="i4"
+                          name="ProductID" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductName]"
+                          dataType="wstr"
+                          length="100"
+                          name="ProductName" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductCategory]"
+                          dataType="wstr"
+                          length="100"
+                          name="ProductCategory" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductStdPrice]"
+                          dataType="numeric"
+                          name="ProductStdPrice"
+                          precision="18"
+                          scale="4" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductIsDiscontinued]"
+                          dataType="wstr"
+                          length="1"
+                          name="ProductIsDiscontinued" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductID]"
+                          dataType="i4"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductID]"
+                          name="ProductID" />
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductName]"
+                          dataType="wstr"
+                          length="100"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductName]"
+                          name="ProductName" />
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductCategory]"
+                          dataType="wstr"
+                          length="100"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductCategory]"
+                          name="ProductCategory" />
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductStdPrice]"
+                          dataType="numeric"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductStdPrice]"
+                          name="ProductStdPrice"
+                          precision="18"
+                          scale="4" />
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductIsDiscontinued]"
+                          dataType="wstr"
+                          length="1"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductIsDiscontinued]"
+                          name="ProductIsDiscontinued" />
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination"
+                  componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="Load DimProducts OLE DB Destination"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[DimProducts]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[DWNorthwindOrders]"
+                      connectionManagerRefId="Package.ConnectionManagers[DWNorthwindOrders]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductID]"
+                          cachedDataType="i4"
+                          cachedName="ProductID"
+                          externalMetadataColumnId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductID]"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductID]" />
+                        <inputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductName]"
+                          cachedDataType="wstr"
+                          cachedLength="100"
+                          cachedName="ProductName"
+                          externalMetadataColumnId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductName]"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductName]" />
+                        <inputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductCategory]"
+                          cachedDataType="wstr"
+                          cachedLength="100"
+                          cachedName="ProductCategory"
+                          externalMetadataColumnId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductCategory]"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductCategory]" />
+                        <inputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductStdPrice]"
+                          cachedDataType="numeric"
+                          cachedName="ProductStdPrice"
+                          cachedPrecision="18"
+                          cachedScale="4"
+                          externalMetadataColumnId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductStdPrice]"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductStdPrice]" />
+                        <inputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductIsDiscontinued]"
+                          cachedDataType="wstr"
+                          cachedLength="1"
+                          cachedName="ProductIsDiscontinued"
+                          externalMetadataColumnId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductIsDiscontinued]"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductIsDiscontinued]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductKey]"
+                          dataType="i4"
+                          name="ProductKey" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductID]"
+                          dataType="i4"
+                          name="ProductID" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductName]"
+                          dataType="wstr"
+                          length="100"
+                          name="ProductName" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductCategory]"
+                          dataType="wstr"
+                          length="100"
+                          name="ProductCategory" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductStdPrice]"
+                          dataType="numeric"
+                          name="ProductStdPrice"
+                          precision="18"
+                          scale="4" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductIsDiscontinued]"
+                          dataType="wstr"
+                          length="1"
+                          name="ProductIsDiscontinued" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task.Paths[OLE DB Source Output]"
+                  endId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Fill Dimension Tables Sequence Container.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{5E6CDD4A-61C9-4A49-95CB-B986B069FF02}"
+          DTS:From="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Fill Dimension Tables Sequence Container\Fill DimEmployees Execute SQL Task" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Fill Dimension Tables Sequence Container.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{E6F30260-EF6F-4D72-B9C3-BFD5752ACCE9}"
+          DTS:From="Package\Fill Dimension Tables Sequence Container\Fill DimEmployees Execute SQL Task"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Fill Dimension Tables Sequence Container.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{0BBCBEB6-C03B-4240-A621-42AD710ACE4B}"
+          DTS:From="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\Fill Dimension Tables Sequence Container\Fill DimDates Execute SQL Task" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Fill Dimension Tables Sequence Container.PrecedenceConstraints[Constraint 3]"
+          DTS:CreationName=""
+          DTS:DTSID="{2CC5766C-11DA-4403-B236-69274ED05D54}"
+          DTS:From="Package\Fill Dimension Tables Sequence Container\Fill DimDates Execute SQL Task"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 3"
+          DTS:To="Package\Fill Dimension Tables Sequence Container\Add Null Date Lookup Values Execute SQL Task" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Fill Fact Tables Sequence Container"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{83126E68-A845-4BFF-A108-B09D404A78AC}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Fill Fact Tables Sequence Container">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task"
+          DTS:CreationName="SSIS.Pipeline.3"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{17295F41-6A77-43A2-978B-3E305C2FA4FA}"
+          DTS:ExecutableType="SSIS.Pipeline.3"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Fill FactOrders Data Flow Task"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source"
+                  componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="Get Orders Data OLE DB Source"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset"></property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">-- 2f)Get source data from Northwind.dbo.Orders, Order Details and exiting dimension tables
+-- Used with Data Flow Task "Fill FactOrders"
+SELECT  
+  Orders.OrderID
+, DimCustomers.CustomerKey
+, DimEmployees.EmployeeKey
+, DimProducts.ProductKey
+, OrderDateKey = OrderDate.DateKey
+, RequiredDateKey =  RequiredDate.DateKey
+, ShippedDateKey =  ShippedDate.DateKey
+, [PriceOnOrder] = Sum([Order Details].UnitPrice)
+, [QuantityOnOrder] = Sum([Order Details].Quantity)
+FROM Northwind.Dbo.[Order Details] 
+INNER JOIN Northwind.Dbo.Orders 
+	ON Northwind.Dbo.[Order Details].OrderID = Northwind.Dbo.Orders.OrderID
+INNER JOIN dbo.DimCustomers
+	ON dbo.DimCustomers.CustomerID = Northwind.Dbo.Orders.CustomerID
+INNER JOIN dbo.DimEmployees
+	ON dbo.DimEmployees.EmployeeID = Northwind.Dbo.Orders.EmployeeID
+INNER JOIN dbo.DimProducts
+	ON dbo.DimProducts.ProductID = Northwind.Dbo.[Order Details].ProductID
+INNER JOIN dbo.DimDates AS OrderDate
+	ON  OrderDate.[Date] = IsNull(Northwind.Dbo.[Orders].OrderDate, '1900-01-01 00:00:00.000')
+INNER JOIN dbo.DimDates AS RequiredDate
+	ON  RequiredDate.[Date] = IsNull(Northwind.Dbo.[Orders].RequiredDate, '1900-01-01 00:00:00.000')
+INNER JOIN dbo.DimDates AS ShippedDate
+	ON  ShippedDate.[Date] = IsNull(Northwind.Dbo.[Orders].ShippedDate, '1900-01-01 00:00:00.000')
+GROUP BY
+  Orders.OrderID
+, DimCustomers.CustomerKey
+, DimEmployees.EmployeeKey
+, DimProducts.ProductKey
+, OrderDate.DateKey
+, RequiredDate.DateKey
+, ShippedDate.DateKey</property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[DWNorthwindOrders]"
+                      connectionManagerRefId="Package.ConnectionManagers[DWNorthwindOrders]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderID]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OrderID]"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderID]"
+                          name="OrderID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerKey]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerKey]"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerKey]"
+                          name="CustomerKey"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[EmployeeKey]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[EmployeeKey]"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[EmployeeKey]"
+                          name="EmployeeKey"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductKey]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductKey]"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductKey]"
+                          name="ProductKey"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDateKey]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OrderDateKey]"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDateKey]"
+                          name="OrderDateKey"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[RequiredDateKey]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RequiredDateKey]"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[RequiredDateKey]"
+                          name="RequiredDateKey"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[ShippedDateKey]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ShippedDateKey]"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[ShippedDateKey]"
+                          name="ShippedDateKey"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[PriceOnOrder]"
+                          dataType="cy"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PriceOnOrder]"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[PriceOnOrder]"
+                          name="PriceOnOrder"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[QuantityOnOrder]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[QuantityOnOrder]"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[QuantityOnOrder]"
+                          name="QuantityOnOrder"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OrderID]"
+                          dataType="i4"
+                          name="OrderID" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerKey]"
+                          dataType="i4"
+                          name="CustomerKey" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[EmployeeKey]"
+                          dataType="i4"
+                          name="EmployeeKey" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductKey]"
+                          dataType="i4"
+                          name="ProductKey" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OrderDateKey]"
+                          dataType="i4"
+                          name="OrderDateKey" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RequiredDateKey]"
+                          dataType="i4"
+                          name="RequiredDateKey" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ShippedDateKey]"
+                          dataType="i4"
+                          name="ShippedDateKey" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PriceOnOrder]"
+                          dataType="cy"
+                          name="PriceOnOrder" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[QuantityOnOrder]"
+                          dataType="i4"
+                          name="QuantityOnOrder" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[OrderID]"
+                          dataType="i4"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[OrderID]"
+                          name="OrderID" />
+                        <outputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerKey]"
+                          dataType="i4"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerKey]"
+                          name="CustomerKey" />
+                        <outputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[EmployeeKey]"
+                          dataType="i4"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[EmployeeKey]"
+                          name="EmployeeKey" />
+                        <outputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductKey]"
+                          dataType="i4"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductKey]"
+                          name="ProductKey" />
+                        <outputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[OrderDateKey]"
+                          dataType="i4"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[OrderDateKey]"
+                          name="OrderDateKey" />
+                        <outputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RequiredDateKey]"
+                          dataType="i4"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RequiredDateKey]"
+                          name="RequiredDateKey" />
+                        <outputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ShippedDateKey]"
+                          dataType="i4"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ShippedDateKey]"
+                          name="ShippedDateKey" />
+                        <outputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[PriceOnOrder]"
+                          dataType="cy"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[PriceOnOrder]"
+                          name="PriceOnOrder" />
+                        <outputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[QuantityOnOrder]"
+                          dataType="i4"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[QuantityOnOrder]"
+                          name="QuantityOnOrder" />
+                        <outputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination"
+                  componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="Load DimProducts OLE DB Destination"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[FactOrders]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[DWNorthwindOrders]"
+                      connectionManagerRefId="Package.ConnectionManagers[DWNorthwindOrders]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].Columns[OrderID]"
+                          cachedDataType="i4"
+                          cachedName="OrderID"
+                          externalMetadataColumnId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OrderID]"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderID]" />
+                        <inputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CustomerKey]"
+                          cachedDataType="i4"
+                          cachedName="CustomerKey"
+                          externalMetadataColumnId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CustomerKey]"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerKey]" />
+                        <inputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].Columns[EmployeeKey]"
+                          cachedDataType="i4"
+                          cachedName="EmployeeKey"
+                          externalMetadataColumnId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[EmployeeKey]"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[EmployeeKey]" />
+                        <inputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductKey]"
+                          cachedDataType="i4"
+                          cachedName="ProductKey"
+                          externalMetadataColumnId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductKey]"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductKey]" />
+                        <inputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].Columns[OrderDateKey]"
+                          cachedDataType="i4"
+                          cachedName="OrderDateKey"
+                          externalMetadataColumnId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OrderDateKey]"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDateKey]" />
+                        <inputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].Columns[RequiredDateKey]"
+                          cachedDataType="i4"
+                          cachedName="RequiredDateKey"
+                          externalMetadataColumnId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RequiredDateKey]"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[RequiredDateKey]" />
+                        <inputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ShippedDateKey]"
+                          cachedDataType="i4"
+                          cachedName="ShippedDateKey"
+                          externalMetadataColumnId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ShippedDateKey]"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[ShippedDateKey]" />
+                        <inputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].Columns[PriceOnOrder]"
+                          cachedDataType="cy"
+                          cachedName="PriceOnOrder"
+                          externalMetadataColumnId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PriceOnOrder]"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[PriceOnOrder]" />
+                        <inputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].Columns[QuantityOnOrder]"
+                          cachedDataType="i4"
+                          cachedName="QuantityOnOrder"
+                          externalMetadataColumnId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[QuantityOnOrder]"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output].Columns[QuantityOnOrder]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OrderID]"
+                          dataType="i4"
+                          name="OrderID" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CustomerKey]"
+                          dataType="i4"
+                          name="CustomerKey" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[EmployeeKey]"
+                          dataType="i4"
+                          name="EmployeeKey" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductKey]"
+                          dataType="i4"
+                          name="ProductKey" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OrderDateKey]"
+                          dataType="i4"
+                          name="OrderDateKey" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RequiredDateKey]"
+                          dataType="i4"
+                          name="RequiredDateKey" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ShippedDateKey]"
+                          dataType="i4"
+                          name="ShippedDateKey" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PriceOnOrder]"
+                          dataType="cy"
+                          name="PriceOnOrder" />
+                        <externalMetadataColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[QuantityOnOrder]"
+                          dataType="i4"
+                          name="QuantityOnOrder" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task.Paths[OLE DB Source Output]"
+                  endId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Prepare ETL Process Sequence Container"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{EF64CFC2-6F78-46B6-865B-1EFE3DDD1713}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Prepare ETL Process Sequence Container">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Prepare ETL Process Sequence Container\Clear All Tables Execute SQL Task"
+          DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{7FEAAB9A-DB4F-42D7-990F-B26BE53F40D7}"
+          DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Clear All Tables Execute SQL Task"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{86E7063C-D345-4618-A46B-E6ACC8E64F57}"
+              SQLTask:SqlStatementSource="--1b) Clear all tables data warehouse tables and reset their Identity Auto Number &#xA;-- Used with Execute SQL Task &quot;Clear All Tables&quot;&#xA;Truncate Table dbo.[FactOrders]&#xA;Truncate Table dbo.[DimCustomers]&#xA;Truncate Table dbo.[DimProducts]&#xA;Truncate Table dbo.[DimEmployees]&#xA;Truncate Table dbo.[DimDates]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Prepare ETL Process Sequence Container\Drop Foreign Keys Execute SQL Task"
+          DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{10B2AA2E-392C-45F4-B2E1-140EBB5C2F68}"
+          DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Drop Foreign Keys Execute SQL Task"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{86E7063C-D345-4618-A46B-E6ACC8E64F57}"
+              SQLTask:SqlStatementSource="-- 1a) Drop Foreign Keys &#xA;-- Used with Execute SQL Task &quot;Drop Foreign Key Constraints&quot;&#xA;Alter Table [dbo].DimEmployees Drop Constraint FK_DimEmployees_DimEmployees&#xA;Alter Table [dbo].FactOrders Drop Constraint FK_FactOrders_DimCustomers&#xA;Alter Table [dbo].FactOrders Drop Constraint FK_FactOrders_DimEmployees&#xA;Alter Table [dbo].FactOrders Drop Constraint FK_FactOrders_DimProducts&#xA;Alter Table [dbo]. FactOrders Drop Constraint FK_FactOrders_DimDates_OrderDate &#xA;Alter Table [dbo].FactOrders Drop Constraint FK_FactOrders_DimDates_RequiredDate&#xA;Alter Table [dbo].FactOrders Drop Constraint FK_FactOrders_DimDates_ShippedDate&#xA;-- You will add Foreign Keys back (At the End of the ETL Process)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Prepare ETL Process Sequence Container.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{22CD56AC-176D-4896-86ED-129FB7C055EE}"
+          DTS:From="Package\Prepare ETL Process Sequence Container\Drop Foreign Keys Execute SQL Task"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Prepare ETL Process Sequence Container\Clear All Tables Execute SQL Task" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{5DC8B1F0-0F11-4ADC-AFEF-657C86906597}"
+      DTS:From="Package\Prepare ETL Process Sequence Container"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Fill Dimension Tables Sequence Container" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{278C443F-A044-44CE-87C5-CFB90F991B5B}"
+      DTS:From="Package\Fill Dimension Tables Sequence Container"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Fill Fact Tables Sequence Container" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{C95D335A-FB16-4A4D-AD06-41432DF2AD88}"
+      DTS:From="Package\Fill Fact Tables Sequence Container"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\End ETL Process Sequence Container" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="360,41.6"
+          Id="Package\End ETL Process Sequence Container\Add Foreign Key Constraints Execute SQL Task"
+          TopLeft="23.9499864585699,11.6174099947424" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="427.2,80.8"
+          Size="427.2,124"
+          Id="Package\End ETL Process Sequence Container"
+          TopLeft="762.800027008354,650.143492240583" />
+        <NodeLayout
+          Size="366.4,41.6"
+          Id="Package\Fill Dimension Tables Sequence Container\Add Null Date Lookup Values Execute SQL Task"
+          TopLeft="28,281.900000000001" />
+        <NodeLayout
+          Size="366.4,41.6"
+          Id="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task"
+          TopLeft="28,5.50000000000011" />
+        <NodeLayout
+          Size="366.4,41.6"
+          Id="Package\Fill Dimension Tables Sequence Container\Fill DimDates Execute SQL Task"
+          TopLeft="28,212.8" />
+        <NodeLayout
+          Size="366.4,41.6"
+          Id="Package\Fill Dimension Tables Sequence Container\Fill DimEmployees Execute SQL Task"
+          TopLeft="29.1428571623198,74.6000000000003" />
+        <NodeLayout
+          Size="366.4,41.6"
+          Id="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task"
+          TopLeft="28,143.7" />
+        <EdgeLayout
+          Id="Package\Fill Dimension Tables Sequence Container.PrecedenceConstraints[Constraint]"
+          TopLeft="211.77142858116,47.1000000000001">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,27.5000000000001"
+              Start="0,0"
+              End="0,20.0000000000001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.0000000000001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Fill Dimension Tables Sequence Container.PrecedenceConstraints[Constraint 1]"
+          TopLeft="211.77142858116,116.2">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,27.4999999999997"
+              Start="0,0"
+              End="0,19.9999999999997">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.9999999999997" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Fill Dimension Tables Sequence Container.PrecedenceConstraints[Constraint 2]"
+          TopLeft="211.2,185.3">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,27.5"
+              Start="0,0"
+              End="0,20">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Fill Dimension Tables Sequence Container.PrecedenceConstraints[Constraint 3]"
+          TopLeft="211.2,254.4">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,27.5000000000001"
+              Start="0,0"
+              End="0,20.0000000000001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.0000000000001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="421.6,378.4"
+          Size="421.6,421.6"
+          Id="Package\Fill Dimension Tables Sequence Container"
+          TopLeft="268.999996878206,474.966586036266" />
+        <NodeLayout
+          Size="260.8,41.6"
+          Id="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task"
+          TopLeft="38.1999868124725,10.1391438520251" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="416.8,76.8"
+          Size="416.8,120"
+          Id="Package\Fill Fact Tables Sequence Container"
+          TopLeft="762.800027008354,476.404358495431" />
+        <NodeLayout
+          Size="299.2,41.6"
+          Id="Package\Prepare ETL Process Sequence Container\Clear All Tables Execute SQL Task"
+          TopLeft="46,61.1000000000002" />
+        <NodeLayout
+          Size="299.2,46.4"
+          Id="Package\Prepare ETL Process Sequence Container\Drop Foreign Keys Execute SQL Task"
+          TopLeft="46,5.50000000000006" />
+        <EdgeLayout
+          Id="Package\Prepare ETL Process Sequence Container.PrecedenceConstraints[Constraint]"
+          TopLeft="46,28.7">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,53.2000000000002"
+              Start="0,0"
+              End="-7.5,53.2000000000002">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-18.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-18.5,0"
+                    Point2="-22.5,0"
+                    Point3="-22.5,4" />
+                  <mssgle:LineSegment
+                    End="-22.5,49.2000000000002" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-22.5,49.2000000000002"
+                    Point2="-22.5,53.2000000000002"
+                    Point3="-18.5,53.2000000000002" />
+                  <mssgle:LineSegment
+                    End="-7.5,53.2000000000002" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="416.8,157.6"
+          Size="416.8,200.8"
+          Id="Package\Prepare ETL Process Sequence Container"
+          TopLeft="268.999996878206,268.363773850007" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="268.999996878206,368.763773850007">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-5.6843418860808E-14,317.002812186259"
+              Start="0,0"
+              End="-7.50000000000006,317.002812186259">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-18.5000000000001,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-18.5000000000001,0"
+                    Point2="-22.5000000000001,0"
+                    Point3="-22.5000000000001,4" />
+                  <mssgle:LineSegment
+                    End="-22.5000000000001,313.002812186259" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-22.5000000000001,313.002812186259"
+                    Point2="-22.5000000000001,317.002812186259"
+                    Point3="-18.5000000000001,317.002812186259" />
+                  <mssgle:LineSegment
+                    End="-7.50000000000006,317.002812186259" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="690.599996878206,685.766586036266">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="72.2000301301481,-149.362227540835"
+              Start="0,0"
+              End="64.7000301301481,-149.362227540835">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="32.100015065074,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="32.100015065074,0"
+                    Point2="36.100015065074,0"
+                    Point3="36.100015065074,-4" />
+                  <mssgle:LineSegment
+                    End="36.100015065074,-145.362227540835" />
+                  <mssgle:CubicBezierSegment
+                    Point1="36.100015065074,-145.362227540835"
+                    Point2="36.100015065074,-149.362227540835"
+                    Point3="40.100015065074,-149.362227540835" />
+                  <mssgle:LineSegment
+                    End="64.7000301301481,-149.362227540835" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="973.800027008354,596.404358495431">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,53.7391337451521"
+              Start="0,0"
+              End="0,46.2391337451521">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.2391337451521" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="268.8,41.6"
+          Id="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination"
+          TopLeft="21.4857146652377,111.152942746568" />
+        <NodeLayout
+          Size="243.2,41.6"
+          Id="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source"
+          TopLeft="27.7714290579971,30.4000004375682" />
+        <EdgeLayout
+          Id="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task.Paths[OLE DB Source Output]"
+          TopLeft="152.628571861617,72.0000004375682">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39.1529423090001"
+              Start="0,0"
+              End="0,31.6529423090001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.6529423090001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Get Customer Data OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Fill Dimension Tables Sequence Container\Fill DimCustomers Data Flow Task\Load DimCustomers OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="240,41.6"
+          Id="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source"
+          TopLeft="61.4857153464337,33.4588240098788" />
+        <NodeLayout
+          Size="260.8,41.6"
+          Id="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination"
+          TopLeft="98.62857312183,190.682355626644" />
+        <EdgeLayout
+          Id="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task.Paths[OLE DB Source Output]"
+          TopLeft="181.485715346434,75.0588240098788">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="47.5428577753962,115.623531616765"
+              Start="0,0"
+              End="47.5428577753962,108.123531616765">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,53.8117658083827" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,53.8117658083827"
+                    Point2="0,57.8117658083827"
+                    Point3="4,57.8117658083827" />
+                  <mssgle:LineSegment
+                    End="43.5428577753962,57.8117658083827" />
+                  <mssgle:CubicBezierSegment
+                    Point1="43.5428577753962,57.8117658083827"
+                    Point2="47.5428577753962,57.8117658083827"
+                    Point3="47.5428577753962,61.8117658083827" />
+                  <mssgle:LineSegment
+                    End="47.5428577753962,108.123531616765" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="230.4,41.6"
+          Id="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source"
+          TopLeft="94.4,44" />
+        <NodeLayout
+          Size="260.8,41.6"
+          Id="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination"
+          TopLeft="99.2,184.8" />
+        <EdgeLayout
+          Id="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task.Paths[OLE DB Source Output]"
+          TopLeft="209.6,85.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="20,99.2"
+              Start="0,0"
+              End="20,91.7">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,45.6" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,45.6"
+                    Point2="0,49.6"
+                    Point3="4,49.6" />
+                  <mssgle:LineSegment
+                    End="16,49.6" />
+                  <mssgle:CubicBezierSegment
+                    Point1="16,49.6"
+                    Point2="20,49.6"
+                    Point3="20,53.6" />
+                  <mssgle:LineSegment
+                    End="20,91.7" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Get Products Data OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Fill Dimension Tables Sequence Container\Fill DimProducts Data Flow Task\Load DimProducts OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Get Orders Data OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Fill Fact Tables Sequence Container\Fill FactOrders Data Flow Task\Load DimProducts OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

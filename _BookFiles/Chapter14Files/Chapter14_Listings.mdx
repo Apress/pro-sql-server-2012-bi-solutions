@@ -1,0 +1,674 @@
+/********** Pro SQL Server 2012 BI Solutions **********
+This file contains the listing code found in chapter 14
+*******************************************************/
+
+// Listing 14-1. MDX comments
+-- MDX and SQL Comment 
+// MDX Only Comment
+/* MDX and SQL Block Comment */
+
+// Listing 14-2. The Basic MDX Select Syntax 
+Select
+ { <a set of attributes> } On Columns,
+ { <a set of attributes> } On Rows
+From <cube name>
+Where ( <member> );
+
+// Listing 14-3. An MDX example
+Select 
+ { [Measures].[SalesQuantity] } On Columns, -- Axis 0
+ { [DimTitles].[Title].[Is Anger the Enemy?] } On Rows -- Axis 1
+From [CubePubsSales]
+Where ( [DimStores].[Store].[Eric the Read Books] );
+
+// Listing 14-4 Examples with and without optional syntax items in MDX
+Select 
+ { [Measures].[SalesQuantity] } On Columns,
+ { [DimTitles].[Title].[Is Anger the Enemy?] } On Rows 
+From [CubePubsSales]
+Where ( [DimStores].[Store].[Eric the Read Books] );
+
+-- Here is the same code with optional syntax items removed 
+Select 
+  Measures.SalesQuantity On Columns, 
+-- Curly Braces are optional, {} Defines a Set of Results
+  DimTitles.Title.[Is Anger the Enemy?] On Rows 
+-- Square Brackets are optional, [] Defines a Object Identifier
+From CubePubsSales 
+-- Parentheses are optional, () Define Function Parameters or Set of Coordinates
+Where DimStores.Store.[Eric the Read Books]
+-- Semi-colon is optional, ; Defines the End of a Statement
+
+
+// Listing 14-5. Three more syntax examples in MDX
+-- a: The Where clause is also optional
+Select  
+  [Measures].[SalesQuantity] On Columns,
+  [DimTitles].[Title].[Is Anger the Enemy?] On Rows
+From [CubePubsSales]
+
+-- b: MDX is not sensitive to white spaces 
+Select	  [Measures].[SalesQuantity]  
+ On Columns    ,
+   [DimTitles].      [Title]. 
+                              [Is Anger the Enemy?]  	
+	 On Rows 
+  From [CubePubsSales]
+
+-- c: MDX is not Case Sensitive 
+SelECt   [MeaSURes].[SALESQUANTITY]  
+	 On CoLUMns,
+	 [DimTITLes].[TitLe].[Is ANGER THE ENemy?] 
+	 ON ROWs 
+	 From [CubePubsSales]
+
+// Listing 14-6. The DefaultMember function
+Select  
+From [CubePubsSales];
+
+-- Same As...
+Select 
+{ [Measures].DefaultMember } On Columns,
+{( -- Parentheses are required to Define a SET of Coordinates
+[DimAuthors].[Author].DefaultMember
+,[DimDates].[Date].DefaultMember
+,[DimOrders].[OrderNumber].DefaultMember 
+,[DimStores].[Store].DefaultMember
+,[DimTitles].[Title].DefaultMember
+)} On Rows
+From [CubePubsSales];
+
+
+// Listing 14-7. The All versus default member dimension.
+Select 
+{ 
+ [Measures].DefaultMember
+ -- You cannot use the [All] member on the measures dimension.
+ -- So, we are still using the default member here.
+} On Columns,
+{( -- Parentheses required to Define a SET of Coordinates
+[DimAuthors].[All]
+,[DimDates].[All]
+,[DimOrders].[All]
+,[DimStores].[All]
+,[DimTitles].[All]
+)} On Rows
+From [CubePubsSales];
+
+-- In this case, since the [SalesQuantity] attribute is
+-- the default member in the cube, it's the same as...
+Select 
+{[Measures].[SalesQuantity]} On Columns,
+{( 
+ [DimAuthors].[All]
+,[DimDates].[All]
+,[DimOrders].[All]
+,[DimStores].[All]
+,[DimTitles].[All]
+)} On Rows
+From [CubePubsSales];
+
+
+// Listing 14-8. Examples using the Key vs. Name identifiers
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ -- Dimension - Hierarchy - Level - Member by Key
+[DimTitles].[TitlesByPublisher].[Publisher].&[1] -- Using Key
+} On Rows
+From [CubePubsSales];
+
+-- Same result, but uses the Name of the attribute and not the key
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ -- Dimension - Hierarchy - Level - Member by Name
+  [DimTitles].[TitlesByPublisher].[Publisher].[New Moon Books] -- Using Name
+} On Rows
+From [CubePubsSales];
+
+
+// Listing 14-9. Code for Exercise 14-1 
+-- Write a Query that returns the Sales Qty by Store "BookBeat"
+
+-- Version 1: Using a member's name
+Select 
+{ [Measures].[SalesQuantity] } on Columns,
+{ [DimStores].[Store].[Store].[BookBeat] } On Rows -- Using the Name
+From [CubePubsSales]
+GO
+-- Version 2: Using a member's key
+Select 
+{ [Measures].[SalesQuantity] } on Columns,
+{ [DimStores].[Store].&[6] } On Rows -- Using the Key
+From [CubePubsSales]
+GO
+-- Version 3: Using a member's key and the default measure
+Select [DimStores].[Store].&[6] On Columns
+From [CubePubsSales]
+GO
+
+
+// Listing 14-10. Identifying positons within queries
+Select 
+ { [Measures].[SalesQuantity] } On Columns,
+ { [DimTitles].[TitlesByType].[TitleType] } On Rows 
+From [CubePubsSales];
+
+-- Same as...
+Select 
+ { [Measures].[SalesQuantity] } On Axis(0), -- Using Axis Key
+ { [DimTitles].[TitlesByType].[TitleType] } On Axis(1) 
+From [CubePubsSales];
+-- Note that the Axis collection use Parentheses (like VB) 
+-- and not Brackets (like C#)
+
+-- same as before, but does not use the Axis keyword
+Select 
+ { [Measures].[SalesQuantity] } On 0, -- Using Axis Key
+ { [DimTitles].[TitlesByType].[TitleType] } On 1 
+From [CubePubsSales];
+
+// Listing 14-11. Positions cannot be skipped in columns and rows
+-- This WON'T work since we are not including axis 0
+Select 
+ { [DimTitles].[TitlesByType].[TitleType] } On 1 
+From [CubePubsSales];
+--ERROR = "Axis numbers specified in a query must be sequentially specified, and cannot contain gaps."
+
+-- Must be written as ...
+Select 
+ { [DimTitles].[TitlesByType].[TitleType] } On 0 
+From [CubePubsSales];
+
+
+// Listing 14-12. Queries that return one or more tuples
+-- This query returns one tuple from a single cell
+Select 
+{
+ [Measures].[SalesQuantity]
+} 
+On Columns,
+{(-- Parentheses are required since we specify a SET of Coordinates
+ [DimAuthors].[Author].[Cheryl Carson]
+,[DimStores].[Store].[Bookbeat]
+,[DimTitles].[Title].[But Is It User Friendly?]
+,[DimDates].[Year-Qtr-Month-Day].[Date].[Saturday, May 22 1993 12:00AM]
+)} 
+On Rows 
+From [CubePubsSales];
+
+-- This query also returns one tuple, but is an aggregate of many cells 
+Select 
+{
+ [Measures].[SalesQuantity]
+} 
+On Columns,
+{( -- Parentheses are NOT required since it no longer specifies a SET of Coordinates
+[DimStores].[Store].[Bookbeat]
+)} 
+On Rows 
+From [CubePubsSales];
+
+-- This query returns two tuples, each is an aggregate of many cells 
+Select 
+{
+ [Measures].[SalesQuantity]
+} 
+On Columns,
+{-- Braces are required when more than one tuple is returned
+ ([DimStores].[Store].[Bookbeat]) -- Will return one tuple
+-- Remember each item in parentheses implictily includes the other dimensions
+,([DimStores].[Store].[News & Brews]) -- Will return another tuple
+} 
+On Rows 
+From [CubePubsSales];
+
+
+// Listing 14-13. Improper coordinates for a single tuple
+-- This query will not work!
+Select 
+{
+  [Measures].[SalesQuantity]
+, [Measures].[NumberOfSales]
+} On Columns,
+{ ( -- This parenthesis  indicates you are defining multiple coordinates 
+   -- for a SINGLE tuple (a.k.a. a result value )
+  [DimTitles].[TitleType].&[Business]
+  -- A second coordinate won't work if it is from the same dimension!
+, [DimTitles].[TitleType].&[Psychology]
+) } On Rows
+From [CubePubsSales];
+//Error = The 'TitleType' hierarchy appears more than once in the tuple.
+
+-- This query works  though!
+Select 
+{
+  [Measures].[SalesQuantity] -- 1st tuple
+, [Measures].[NumberOfSales] -- 2nd tuples
+} On Columns,
+{  -- Do NOT include parentheses when
+   -- you want TWO tuples (a.k.a. result values) from the SAME dimension-heirarchy
+  [DimTitles].[TitleType].&[Business] -- 3rd tuple
+, [DimTitles].[TitleType].&[Psychology] -- 4th tuple
+ } On Rows
+From [CubePubsSales]; -- This Query Work!
+
+
+-- Listing 14-14. Using a parentheses to encompass two multiple measures
+Select 
+{  ( -- This  will not work!
+  [Measures].[SalesQuantity]
+, [Measures].[NumberOfSales]
+) } On Columns
+From [CubePubsSales];
+//Error = The 'Measures' hierarchy appears more than once in the tuple.
+
+
+// Listing 14-15. Aggregating store and title data into a single tuple  
+Select 
+{
+  [Measures].[SalesQuantity]  -- 1st tuple 
+, [Measures].[NumberOfSales] -- 2nd tuple
+} On Columns,
+{ ( -- This parenthesis begins the coordinates of a 3rd tuple!
+   [DimTitles].[TitleType].&[Business] -- From the Titles dimension
+,  [DimStores].[Store].[BookBeat] -- From the Stores dimension
+) } On Rows
+From [CubePubsSales];
+
+
+// Listing 14-16.  Code for Exercise 14-2 
+Select 
+{
+  [Measures].[SalesQuantity]
+, [Measures].[NumberOfSales] 
+} On Columns,
+{ 
+ ( [DimStores].[Store].[BookBeat] ) 
+,( [DimStores].[Store].[Eric The Read Books] )
+} On Rows
+From [CubePubsSales];
+
+
+// Listing 14-17. Adding a calculated m ember
+-- Adding a Calculated Member
+With Member Measures.[test]
+As 
+"test data" --String data (uses Double Quotes)
+-- Note: using Single Quotes cause an Error
+Select 
+{ [Measures].[test] } On Columns
+From [CubePubsSales];
+
+
+// Listing 14-18. Creating Mathmatical Expressions
+--1) You can use parenthese to surround expressions
+With Member Measures.[AddStuff]
+As 
+(5 + 7) -- Numeric data
+SELECT Measures.[AddStuff] On Columns 
+From [CubePubsSales]
+
+--2) Do NOT use Braces to surround you expression
+With Member Measures.[AddStuff]
+As 
+{ 5 + 7 } -- Causes an #Error
+SELECT Measures.[AddStuff] On Columns 
+From [CubePubsSales] 
+
+--3) Oddly, you CAN use Single Quotes to surround you expression
+With Member Measures.[AddStuff]
+As 
+' 5 + 7 ' 
+SELECT Measures.[AddStuff] On Columns 
+From [CubePubsSales] 
+
+// Listing 14-19. Placing members within dimenstions
+-- Calculated Members do not have to be on the Measures dimension
+With Member [DimDates].[Year].[1992 And 1993]
+As
+ [DimDates].[Year-Qtr-Month-Day].[1992]
+ +
+ [DimDates].[Year-Qtr-Month-Day].[1993]   
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ [DimDates].[Year].[1992 And 1993] } On Rows
+From [CubePubsSales];
+
+
+// Listing 14-20. The AllMembers  and Member properties
+With Member Measures.[test]
+    As "test data"
+Select 
+{ [Measures].AllMembers } On Columns  -- includes calculated members
+From [CubePubsSales];
+GO
+
+With Member Measures.[test]
+    As "test data"
+Select 
+{  [Measures].Members } On Columns -- Does NOT Include Calculated Members
+From [CubePubsSales];
+
+
+// Listing 14-21. Specifying  a combination of a hierarchy and a level implicitly returns all members 
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ -- Dimension - Hierarchy - Level - Property or Function
+[DimTitles].[TitlesByType].[Title].AllMembers
+} On Rows
+From [CubePubsSales];
+
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ -- Dimension - Hierarchy - Level
+ [DimTitles].[TitlesByType].[Title]
+} On Rows
+From [CubePubsSales];
+
+
+// Listing 14-22. Specifying an Attribute Hierarchy does not implicitly returns all members 
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ -- Dimension - Attribute Hierarchy
+ [DimTitles].[Title]
+} On Rows
+From [CubePubsSales];
+
+
+// Listing 14-23. A query that produces many null values
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ [DimTitles].[Publisher].[Publisher] } On Rows 
+From [CubePubsSales];
+
+// Listing 14-24. Using the NonEmpty function
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ NonEmpty( [DimTitles].[Publisher].[Publisher] ) } On Rows 
+From [CubePubsSales];
+
+
+// Listing 14-25. Using the Non Empty clause and the NonEmpty function
+Select -- Start with Lots of nulls in eight columns and six rows
+{  [DimDates].[Year-Qtr-Month-Day].[Year].AllMembers } On Columns,
+{  [DimTitles].[TitlesByType].[TitleType].AllMembers  } On Rows
+From [CubePubsSales]
+GO
+Select Non Empty -- Now has less nulls (5 columns removed)
+{  [DimDates].[Year-Qtr-Month-Day].[Year].AllMembers } On Columns,
+{  [DimTitles].[TitlesByType].[TitleType].AllMembers  } On Rows
+From [CubePubsSales]
+GO
+Select Non Empty -- Even Less nulls (1 more row removed)
+{ NonEmpty( [DimDates].[Year-Qtr-Month-Day].[Year].AllMembers  ) } On Columns,
+{ NonEmpty( [DimTitles].[TitlesByType].[TitleType].AllMembers  ) } On Rows
+From [CubePubsSales]
+
+
+// Listing 14-26. Various paths to access a member or level
+-- Starts like this...
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ -- Dim.Heirachy.Level.Member.Member (long path)
+  [DimTitles].[TitlesByPublisher].[Publisher].[New Moon Books].[Is Anger the Enemy?]  
+} On Rows 
+From [CubePubsSales];
+GO
+
+-- Can change to this...
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ -- Heirachy.Level.Member.Member 
+ [TitlesByPublisher].[Publisher].[New Moon Books].[Is Anger the Enemy?]  
+} On Rows 
+From [CubePubsSales];
+GO
+
+-- Or this...
+Select 
+{ [Measures].[SalesQuantity]} On Columns,
+{ -- Dim.Member.Member
+   [DimTitles].[New Moon Books].[Is Anger the Enemy?] 
+} On Rows 
+From [CubePubsSales];
+GO
+
+-- Or this...
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ -- Dim.Member
+  [DimTitles].[Is Anger the Enemy?] 
+} On Rows 
+From [CubePubsSales];
+GO
+
+-- Or even like this...
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ -- Member
+  [Is Anger the Enemy?] 
+} On Rows 
+From [CubePubsSales];
+
+
+
+// Listing 14-27. MDX Errors to avoid
+-- Skipping the Hierarchy
+Select 
+{ [Measures].[SalesQuantity]} On Columns,
+{ -- Dim.<Skipped hierarchy>.Level.Level.Member -- DOES NOT WORK (but does NOT give an error!).
+ [DimTitles].[Publisher].[Title].[Is Anger the Enemy?]  
+} On Rows 
+From [CubePubsSales];
+
+-- Skipping the Hierarchy
+Select 
+{ [Measures].[SalesQuantity]} On Columns,
+{ -- Dim.Level.<Skipped Level>.Member -- DOES NOT WORK (but does not give an error either!).
+ [DimTitles].[All].[Is Anger the Enemy?]    
+} On Rows 
+From [CubePubsSales];
+
+-- Multiple Members after a level
+Select 
+{ [Measures].[SalesQuantity]} On Columns,
+{ -- Dim.Level.Member.Member -- DOES NOT WORK (and of course no error either!)
+ [DimTitles].[Publisher].[New Moon Books].[Is Anger the Enemy?]  
+} On Rows 
+From [CubePubsSales];
+
+
+// Listing 14-28. An exception to the rule
+-- This WILL work, though...
+Select 
+{ [Measures].[SalesQuantity]} On Columns,
+{ -- Dim.Member.Member.Member (and not Dim.Level.Member.Member)
+ [DimTitles].[All].[New Moon Books].[Is Anger the Enemy?]
+-- Works because [All] is both a member and a level.    
+} On Rows 
+From [CubePubsSales];
+
+// Listing 14-29. PrevMember and NextMember functions
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ 
+  [DimDates].[Year].[1993]
+, [DimDates].[Year].[1993].PrevMember
+} On Rows
+From [CubePubsSales];
+GO
+
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ 
+  [DimDates].[Year].[1992].NextMember
+, [DimDates].[Year].[1992]
+} On Rows
+From [CubePubsSales];
+GO
+
+-- You can even chain these functions together
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ 
+  [DimDates].[Year].[1991].NextMember.NextMember
+, [DimDates].[Year].[1992]
+} On Rows
+From [CubePubsSales];
+
+
+// Listing 14-30. The children function
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ 
+  [DimDates].[Year-Qtr-Month-Day].[Year].[1992].Children
+, [DimDates].[Year-Qtr-Month-Day].[Year].[1993].Children
+} On Rows
+From [CubePubsSales];
+
+// Listing 14-31. The Parent function
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ 
+  [DimDates].[Year-Qtr-Month-Day].[Quarter].[Q1 - 1993].Parent
+, [DimDates].[Year-Qtr-Month-Day].[Quarter].[Q1 - 1993]
+} On Rows
+From [CubePubsSales];
+
+
+// Listing 14-32.The CurrentMember function
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ [DimDates].[Year].CurrentMember } On Rows
+From [CubePubsSales];
+GO
+-- The CurrentMember function is implied
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ [DimDates].[Year] } On Rows
+From [CubePubsSales];
+
+
+// Listing 14-33. A MDX query without the Order function
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{  [DimTitles].[TitlesByPublisher].AllMembers } On Rows
+From [CubePubsSales];
+
+// Listing 14-34. The Order function
+-- Ordered by Sales Quantity, descending
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ 
+ Order(  [DimTitles].[TitlesByPublisher].AllMembers
+         , [Measures].[SalesQuantity]
+         , Desc
+       )
+} On Rows
+From [CubePubsSales]; 
+
+
+// Listing 14-35. The break hierarchy argument of the Order Function
+-- Ordered by Sales Quantity, descending
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ 
+ Order(  [DimTitles].[TitlesByPublisher].AllMembers
+         , [Measures].[SalesQuantity]
+         , BDesc
+       )
+} On Rows
+From [CubePubsSales]; 
+
+// Listing 14-36. The CrossJoin operator and function
+-- Since the results or many combinations 
+-- are null values we are using the NonEmpty function
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ NonEmpty(   
+  [DimDates].[Year].AllMembers 
+  * -- This symbol is the cross join operator
+  [DimTitles].[TitlesByType].[Title].AllMembers  
+ ) } On Rows
+From [CubePubsSales];
+GO
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ NonEmpty( 
+  CrossJoin( [DimDates].[Year].AllMembers 
+                 , [DimTitles].[TitlesByType].[Title].AllMembers
+                  )
+ )  } On Rows
+From [CubePubsSales];
+
+// Listing 14-37. Joining more than two dimensions
+-- Using the CrossJoin operator
+Select
+{ [Measures].[SalesQuantity] } On Columns,
+{ 
+ NonEmpty(
+    [DimDates].[Year].AllMembers 
+  * -- Combine one set of results
+    [DimTitles].[TitlesByType].[Title].AllMembers
+  )
+  * -- Then cross join to those results
+    [DimStores].[Store].AllMembers 
+} On Rows
+From [CubePubsSales];
+
+-- Using the CrossJoin function
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ NonEmpty(
+  CrossJoin( 
+    [DimDates].[Year].AllMembers 
+   ,[DimTitles].[TitlesByType].[Title].AllMembers
+   ,[DimStores].[Store].AllMembers
+   )
+  )
+} On Rows
+From [CubePubsSales];
+
+
+// Listing 14-38. The Where clause
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ NonEmpty(
+  CrossJoin( 
+    [DimDates].[Year].AllMembers 
+   ,[DimTitles].[TitlesByType].[Title].AllMembers
+  -- Since the Store hierarchy cannot be used twice in the same statement.
+  -- We have to comment this next line out of our code
+  //,[DimStores].[Store].AllMembers 
+   )
+  )
+} On Rows
+From [CubePubsSales]
+Where( [DimStores].[Store].[News & Brews] );
+
+
+// Listing 14-39. Using the Where with a attribute from a different heirarchy 
+Select 
+{ [Measures].[SalesQuantity] } On Columns,
+{ NonEmpty(
+  CrossJoin( 
+     [DimDates].[Year].AllMembers 
+   , [DimTitles].[TitlesByType].[Title].AllMembers
+    )
+  )
+} On Rows
+From [CubePubsSales]
+Where( [DimTitles].[TitlesByPublisher].[Title].[Sushi, Anyone?] );
+
+
+// Listing 14-40. Filtering  the Measures dimension with the Where clause
+Select -- Note that no measures are selected here
+{  NonEmpty( [Year].AllMembers )} On Columns, -- Placing the Years across the columns
+{  NonEmpty(
+   CrossJoin( 
+    [DimStores].[Store].AllMembers
+   ,[DimTitles].[Title].AllMembers
+   )  ) 
+} On Rows
+From [CubePubsSales]
+Where( [Measures].[NumberOfSales] ); -- Not the default measure ([Measures].[SalesQuantity])

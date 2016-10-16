@@ -1,0 +1,89 @@
+﻿<DeploymentSnapshot xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0">
+  <Target>
+    <Database>PubsBICubes</Database>
+    <Server>RSLaptop2\SQL2012</Server>
+    <ConnectionString>DataSource=RSLaptop2\SQL2012;Timeout=0</ConnectionString>
+  </Target>
+  <Options>
+    <TransactionalDeployment>false</TransactionalDeployment>
+    <PartitionDeployment>DeployPartitions</PartitionDeployment>
+    <RoleDeployment>DeployRolesRetainMembers</RoleDeployment>
+    <ProcessingOption>DoNotProcess</ProcessingOption>
+    <OutputScript></OutputScript>
+    <ImpactAnalysisFile></ImpactAnalysisFile>
+    <ConfigurationSettingsDeployment>Deploy</ConfigurationSettingsDeployment>
+    <OptimizationSettingsDeployment>Deploy</OptimizationSettingsDeployment>
+    <WriteBackTableCreation>UseExisting</WriteBackTableCreation>
+  </Options>
+  <Snapshot>
+    <ObjectSnapshots>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.RelationalDataSource</Type>
+        <TimeStamp>m40PoHRt53rb6wBE15BQv6fGsrI=4/30/2012 6:28:34 PM11/6/2011 1:48:10 AM</TimeStamp>
+        <ID>
+          <String>DWPubsSales</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.DataSourceView</Type>
+        <TimeStamp>T8lLEURS6TAeIRVd7RCFYY1MZs4=5/1/2012 4:33:03 PM12/27/2011 1:46:46 PM</TimeStamp>
+        <ID>
+          <String>DWPubsSalesTables</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>zOMFpXDXd2IED4oy2eqUkyqpu5o=4/23/2012 9:27:49 AM12/15/2011 12:36:17 PM</TimeStamp>
+        <ID>
+          <String>DimAuthors</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>neG90z3q/Tn6yGwPhZRsIAxkvqo=4/23/2012 9:28:05 AM12/30/2011 11:43:02 AM</TimeStamp>
+        <ID>
+          <String>DimStores</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>eZJSbDK00yCv6Mdu3kP/7rwR7u4=12/31/2011 5:23:21 PM12/30/2011 11:43:02 AM</TimeStamp>
+        <ID>
+          <String>DimDates</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>+xSEHo+gycEIMaFys5L0OUlydr4=12/31/2011 5:23:20 PM12/30/2011 11:43:02 AM</TimeStamp>
+        <ID>
+          <String>DimOrders</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>bkayFKeujA+Ox0+f98ObnAf6wIY=4/23/2012 12:46:46 PM12/30/2011 11:43:02 AM</TimeStamp>
+        <ID>
+          <String>DimTitles</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Cube</Type>
+        <TimeStamp>eeLsec1/xglupEfLltlLwmh2Jfc=5/1/2012 5:09:22 PM12/30/2011 11:38:03 AMTP9VZ0vNVXa2iv6OIzeBI4K1jZA=5/1/2012 12:44:24 PM12/30/2011 11:38:02 AM</TimeStamp>
+        <ID>
+          <String>DWPubsSalesVer1</String>
+        </ID>
+      </ObjectSnapshot>
+    </ObjectSnapshots>
+    <DatabaseSnapshot>
+      <Type>Microsoft.AnalysisServices.Database</Type>
+      <TimeStamp>NtF6bn3SrexwaRCGgyzOvQupMmE=11/5/2011 2:36:39 PM11/5/2011 2:36:38 PM</TimeStamp>
+      <ID>
+        <String>PubsBICubes</String>
+      </ID>
+    </DatabaseSnapshot>
+    <Granularity>Coarse</Granularity>
+  </Snapshot>
+  <AssemblyLocations />
+  <ProcessingComplete>true</ProcessingComplete>
+  <LastDeployed>2012-05-02T00:17:03.51Z</LastDeployed>
+</DeploymentSnapshot>

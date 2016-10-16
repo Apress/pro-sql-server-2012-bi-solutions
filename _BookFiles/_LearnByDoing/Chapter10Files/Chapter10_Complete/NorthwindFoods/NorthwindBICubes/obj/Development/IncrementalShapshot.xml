@@ -1,0 +1,82 @@
+﻿<DeploymentSnapshot xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0">
+  <Target>
+    <Database>NorthwindBICubes</Database>
+    <Server>localhost\SQL2012</Server>
+    <ConnectionString>DataSource=localhost\SQL2012;Timeout=0</ConnectionString>
+  </Target>
+  <Options>
+    <TransactionalDeployment>false</TransactionalDeployment>
+    <PartitionDeployment>DeployPartitions</PartitionDeployment>
+    <RoleDeployment>DeployRolesRetainMembers</RoleDeployment>
+    <ProcessingOption>DoNotProcess</ProcessingOption>
+    <OutputScript></OutputScript>
+    <ImpactAnalysisFile></ImpactAnalysisFile>
+    <ConfigurationSettingsDeployment>Deploy</ConfigurationSettingsDeployment>
+    <OptimizationSettingsDeployment>Deploy</OptimizationSettingsDeployment>
+    <WriteBackTableCreation>UseExisting</WriteBackTableCreation>
+  </Options>
+  <Snapshot>
+    <ObjectSnapshots>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.RelationalDataSource</Type>
+        <TimeStamp>ENHfBkNj06QCLz/6siFPmPRk1pE=8/27/2012 1:41:42 PM8/28/2012 10:46:12 AM</TimeStamp>
+        <ID>
+          <String>DWNorthwindOrders</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.DataSourceView</Type>
+        <TimeStamp>lCZysd1loYWgkrvT4WAZL8IlWdw=8/27/2012 1:50:25 PM8/28/2012 10:46:12 AM</TimeStamp>
+        <ID>
+          <String>DWNorthwindOrdersTables</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>TwgYHGxIByagHOtMIfTEqF9O+jo=8/28/2012 2:03:13 PM8/28/2012 10:46:11 AM</TimeStamp>
+        <ID>
+          <String>DimCustomers</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>OtIn0QQLxLoTkuUoZNaPIGcrtgw=8/28/2012 2:18:27 PM8/28/2012 10:46:12 AM</TimeStamp>
+        <ID>
+          <String>DimEmployees</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>ZfdCzJyOs3w8yfF4yeNEgHY1fRE=8/28/2012 2:40:34 PM8/28/2012 10:46:12 AM</TimeStamp>
+        <ID>
+          <String>DimProducts</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>FIAy2W00Ri5J6Qvj2XmeTbjaECM=8/28/2012 2:26:25 PM8/28/2012 10:46:11 AM</TimeStamp>
+        <ID>
+          <String>DimDates</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>xhLxzX718+434aIWv3XrxCllgwQ=8/28/2012 1:28:34 PM8/28/2012 10:46:12 AM</TimeStamp>
+        <ID>
+          <String>DimOrders</String>
+        </ID>
+      </ObjectSnapshot>
+    </ObjectSnapshots>
+    <DatabaseSnapshot>
+      <Type>Microsoft.AnalysisServices.Database</Type>
+      <TimeStamp>ELzAyFyUOo4uoRurtnoVqf5ESL8=8/27/2012 1:41:03 PM8/28/2012 10:46:12 AM</TimeStamp>
+      <ID>
+        <String>NorthwindBICubes</String>
+      </ID>
+    </DatabaseSnapshot>
+    <Granularity>Coarse</Granularity>
+  </Snapshot>
+  <AssemblyLocations />
+  <ProcessingComplete>true</ProcessingComplete>
+  <LastDeployed>2012-08-28T21:46:31.016667Z</LastDeployed>
+</DeploymentSnapshot>

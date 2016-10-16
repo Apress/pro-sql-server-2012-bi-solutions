@@ -1,0 +1,78 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionDocuments", "SolutionDocuments", "{B957AA60-3115-4FC1-8D73-FC13BFA76043}"
+	ProjectSection(SolutionItems) = preProject
+		BISolutionPlan.docx = BISolutionPlan.docx
+		BISolutionWorksheets.xlsx = BISolutionWorksheets.xlsx
+		HelpIndex.htm = HelpIndex.htm
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DWPubsSales", "DWPubsSales", "{9C37DE36-03A6-4171-A4AE-60E7AD011125}"
+	ProjectSection(SolutionItems) = preProject
+		DWPubsSales\Backing up and restoring the database.sql = DWPubsSales\Backing up and restoring the database.sql
+		DWPubsSales\Create DWPubsSales Script.sql = DWPubsSales\Create DWPubsSales Script.sql
+	EndProjectSection
+EndProject
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "DWPubsSalesETL", "DWPubsSalesETL\DWPubsSalesETL.dtproj", "{0F2EB357-6C7F-4FE5-8B82-20A36DA9DAB9}"
+EndProject
+Project("{D2ABAB84-BF74-430A-B69E-9DC6D40DDA17}") = "PubsBICubes", "PubsBICubes\PubsBICubes.dwproj", "{8CF3497E-59EC-476A-8791-0020F26A2FC0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExcelReports", "ExcelReports", "{143AD2C9-32B9-47CB-8334-AC769ED6A2F8}"
+	ProjectSection(SolutionItems) = preProject
+		ExcelReports\SalesReport.pdf = ExcelReports\SalesReport.pdf
+		ExcelReports\SalesReport.xlsx = ExcelReports\SalesReport.xlsx
+	EndProjectSection
+EndProject
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "PubsBIReports", "PubsBIReports\PubsBIReports.rptproj", "{BD97CD19-CB11-4D41-8BD9-13F92927C4CC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TraceFiles", "TraceFiles", "{BAD62BDB-AFE9-42F7-B102-B0E458BE954F}"
+	ProjectSection(SolutionItems) = preProject
+		TraceFiles\ETLProcessingPerformance_Mar15_2012.trc = TraceFiles\ETLProcessingPerformance_Mar15_2012.trc
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Development|Default = Development|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0F2EB357-6C7F-4FE5-8B82-20A36DA9DAB9}.Debug|Default.ActiveCfg = Development
+		{0F2EB357-6C7F-4FE5-8B82-20A36DA9DAB9}.Debug|Default.Build.0 = Development
+		{0F2EB357-6C7F-4FE5-8B82-20A36DA9DAB9}.DebugLocal|Default.ActiveCfg = Development
+		{0F2EB357-6C7F-4FE5-8B82-20A36DA9DAB9}.DebugLocal|Default.Build.0 = Development
+		{0F2EB357-6C7F-4FE5-8B82-20A36DA9DAB9}.Development|Default.ActiveCfg = Development
+		{0F2EB357-6C7F-4FE5-8B82-20A36DA9DAB9}.Development|Default.Build.0 = Development
+		{0F2EB357-6C7F-4FE5-8B82-20A36DA9DAB9}.Release|Default.ActiveCfg = Development
+		{0F2EB357-6C7F-4FE5-8B82-20A36DA9DAB9}.Release|Default.Build.0 = Development
+		{8CF3497E-59EC-476A-8791-0020F26A2FC0}.Debug|Default.ActiveCfg = Development
+		{8CF3497E-59EC-476A-8791-0020F26A2FC0}.Debug|Default.Build.0 = Development
+		{8CF3497E-59EC-476A-8791-0020F26A2FC0}.Debug|Default.Deploy.0 = Development
+		{8CF3497E-59EC-476A-8791-0020F26A2FC0}.DebugLocal|Default.ActiveCfg = Development
+		{8CF3497E-59EC-476A-8791-0020F26A2FC0}.DebugLocal|Default.Build.0 = Development
+		{8CF3497E-59EC-476A-8791-0020F26A2FC0}.DebugLocal|Default.Deploy.0 = Development
+		{8CF3497E-59EC-476A-8791-0020F26A2FC0}.Development|Default.ActiveCfg = Development
+		{8CF3497E-59EC-476A-8791-0020F26A2FC0}.Development|Default.Build.0 = Development
+		{8CF3497E-59EC-476A-8791-0020F26A2FC0}.Development|Default.Deploy.0 = Development
+		{8CF3497E-59EC-476A-8791-0020F26A2FC0}.Release|Default.ActiveCfg = Development
+		{8CF3497E-59EC-476A-8791-0020F26A2FC0}.Release|Default.Build.0 = Development
+		{8CF3497E-59EC-476A-8791-0020F26A2FC0}.Release|Default.Deploy.0 = Development
+		{BD97CD19-CB11-4D41-8BD9-13F92927C4CC}.Debug|Default.ActiveCfg = DebugLocal
+		{BD97CD19-CB11-4D41-8BD9-13F92927C4CC}.Debug|Default.Build.0 = DebugLocal
+		{BD97CD19-CB11-4D41-8BD9-13F92927C4CC}.Debug|Default.Deploy.0 = DebugLocal
+		{BD97CD19-CB11-4D41-8BD9-13F92927C4CC}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{BD97CD19-CB11-4D41-8BD9-13F92927C4CC}.DebugLocal|Default.Build.0 = DebugLocal
+		{BD97CD19-CB11-4D41-8BD9-13F92927C4CC}.DebugLocal|Default.Deploy.0 = DebugLocal
+		{BD97CD19-CB11-4D41-8BD9-13F92927C4CC}.Development|Default.ActiveCfg = DebugLocal
+		{BD97CD19-CB11-4D41-8BD9-13F92927C4CC}.Development|Default.Build.0 = DebugLocal
+		{BD97CD19-CB11-4D41-8BD9-13F92927C4CC}.Development|Default.Deploy.0 = DebugLocal
+		{BD97CD19-CB11-4D41-8BD9-13F92927C4CC}.Release|Default.ActiveCfg = Release
+		{BD97CD19-CB11-4D41-8BD9-13F92927C4CC}.Release|Default.Build.0 = Release
+		{BD97CD19-CB11-4D41-8BD9-13F92927C4CC}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

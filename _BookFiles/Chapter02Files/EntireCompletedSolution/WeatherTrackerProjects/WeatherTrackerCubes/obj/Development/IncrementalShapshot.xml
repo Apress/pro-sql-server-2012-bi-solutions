@@ -1,0 +1,68 @@
+﻿<DeploymentSnapshot xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0">
+  <Target>
+    <Database>WeatherTrackerCubes</Database>
+    <Server>localhost\SQL2011</Server>
+    <ConnectionString>DataSource=localhost\SQL2011;Timeout=0</ConnectionString>
+  </Target>
+  <Options>
+    <TransactionalDeployment>false</TransactionalDeployment>
+    <PartitionDeployment>DeployPartitions</PartitionDeployment>
+    <RoleDeployment>DeployRolesRetainMembers</RoleDeployment>
+    <ProcessingOption>Default</ProcessingOption>
+    <OutputScript></OutputScript>
+    <ImpactAnalysisFile></ImpactAnalysisFile>
+    <ConfigurationSettingsDeployment>Deploy</ConfigurationSettingsDeployment>
+    <OptimizationSettingsDeployment>Deploy</OptimizationSettingsDeployment>
+    <WriteBackTableCreation>UseExisting</WriteBackTableCreation>
+  </Options>
+  <Snapshot>
+    <ObjectSnapshots>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.RelationalDataSource</Type>
+        <TimeStamp>pqmgVvuOs/pLIXWpMZFtqw==9/14/2011 1:05:10 PM9/14/2011 7:42:14 AM</TimeStamp>
+        <ID>
+          <String>DWWeatherTracker</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.DataSourceView</Type>
+        <TimeStamp>e/r5lEjZwobPVPMqKmhu/w==9/14/2011 8:51:27 AM9/14/2011 7:59:03 AM</TimeStamp>
+        <ID>
+          <String>DWWeatherTracker</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>ThvDwSc71160GQ46BfMk7Q==9/14/2011 8:51:27 AM9/14/2011 8:51:26 AM</TimeStamp>
+        <ID>
+          <String>DimEvents</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>tKXOOUEDWoaDZ7rtkOKQ4w==9/14/2011 8:52:21 AM9/14/2011 8:52:20 AM</TimeStamp>
+        <ID>
+          <String>DimDate</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Cube</Type>
+        <TimeStamp>sGntwjUFyi7WrB19A9fI/w==9/14/2011 10:52:57 AM9/14/2011 10:52:55 AMINtvUwHfMfhsrPzaVtNp5w==9/14/2011 10:52:57 AM9/14/2011 10:52:55 AM</TimeStamp>
+        <ID>
+          <String>DWWeatherTracker</String>
+        </ID>
+      </ObjectSnapshot>
+    </ObjectSnapshots>
+    <DatabaseSnapshot>
+      <Type>Microsoft.AnalysisServices.Database</Type>
+      <TimeStamp>CO3XKrj2a71xUVp1ob/Wfg==9/13/2011 2:04:42 PM9/13/2011 2:04:42 PM</TimeStamp>
+      <ID>
+        <String>WeatherTrackerCubes</String>
+      </ID>
+    </DatabaseSnapshot>
+    <Granularity>Coarse</Granularity>
+  </Snapshot>
+  <AssemblyLocations />
+  <ProcessingComplete>true</ProcessingComplete>
+  <LastDeployed>2011-09-14T20:06:08.223333Z</LastDeployed>
+</DeploymentSnapshot>

@@ -1,0 +1,21 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionDocuments", "SolutionDocuments", "{DBF045A0-EE3A-46FF-B89C-8A4C8586D0F9}"
+	ProjectSection(SolutionItems) = preProject
+		BISolutionPlan.docx = BISolutionPlan.docx
+		BISolutionWorksheets.xlsx = BISolutionWorksheets.xlsx
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DWNorthwindOrders", "DWNorthwindOrders", "{0163E1B4-FD73-4842-8DAD-E2ADA849C7C8}"
+	ProjectSection(SolutionItems) = preProject
+		DWNorthwindOrders\Backing up and restoring database.sql = DWNorthwindOrders\Backing up and restoring database.sql
+		DWNorthwindOrders\Create DWNorthwindOrders Script.sql = DWNorthwindOrders\Create DWNorthwindOrders Script.sql
+		DWNorthwindOrders\DWNorthwindOrders_BeforeETL.bak = DWNorthwindOrders\DWNorthwindOrders_BeforeETL.bak
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

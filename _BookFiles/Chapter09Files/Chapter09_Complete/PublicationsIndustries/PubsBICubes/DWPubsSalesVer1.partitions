@@ -1,0 +1,236 @@
+﻿<Cube xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="1b645278-73d8-464b-b1c6-d1b6c79789cf" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+  <ID>DWPubsSalesVer1</ID>
+  <MeasureGroups>
+    <MeasureGroup>
+      <ID>Fact Sales</ID>
+      <Partitions>
+        <Partition dwd:design-time-name="98b971fa-c96d-4dc2-b42d-d7d11cfaae01">
+          <ID>Fact Sales</ID>
+          <Name>Fact Sales</Name>
+          <CreatedTimestamp>0001-01-01T08:00:00Z</CreatedTimestamp>
+          <LastSchemaUpdate>0001-01-01T08:00:00Z</LastSchemaUpdate>
+          <LastProcessed>0001-01-01T08:00:00Z</LastProcessed>
+          <State>Unprocessed</State>
+          <Source xsi:type="DsvTableBinding" dwd:design-time-name="7e4e1002-0a52-4c51-909f-332cfeb6f37a">
+            <DataSourceViewID>DWPubsSalesTables</DataSourceViewID>
+            <TableID>dbo_FactSales</TableID>
+          </Source>
+          <StorageMode>Molap</StorageMode>
+          <CurrentStorageMode>Molap</CurrentStorageMode>
+          <ProcessingMode>Regular</ProcessingMode>
+          <EstimatedRows>21</EstimatedRows>
+          <AggregationDesignID>SimpleAggregationDesign</AggregationDesignID>
+        </Partition>
+      </Partitions>
+      <AggregationDesigns>
+        <AggregationDesign>
+          <ID>SimpleAggregationDesign</ID>
+          <Name>SimpleAggregationDesign</Name>
+          <CreatedTimestamp>2012-01-01T01:10:05.376667Z</CreatedTimestamp>
+          <LastSchemaUpdate>2012-01-01T01:10:05.376667Z</LastSchemaUpdate>
+          <EstimatedRows>21</EstimatedRows>
+          <Dimensions>
+            <Dimension>
+              <CubeDimensionID>DimStores</CubeDimensionID>
+              <Attributes>
+                <Attribute>
+                  <AttributeID>Store Key</AttributeID>
+                  <EstimatedCount>6</EstimatedCount>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>Store Id</AttributeID>
+                </Attribute>
+              </Attributes>
+            </Dimension>
+            <Dimension>
+              <CubeDimensionID>DimDates</CubeDimensionID>
+              <Attributes>
+                <Attribute>
+                  <AttributeID>Date Key</AttributeID>
+                  <EstimatedCount>1829</EstimatedCount>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>Full Date</AttributeID>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>Month</AttributeID>
+                  <EstimatedCount>63</EstimatedCount>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>Quarter</AttributeID>
+                  <EstimatedCount>23</EstimatedCount>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>Year</AttributeID>
+                  <EstimatedCount>8</EstimatedCount>
+                </Attribute>
+              </Attributes>
+            </Dimension>
+            <Dimension>
+              <CubeDimensionID>DimTitles</CubeDimensionID>
+              <Attributes>
+                <Attribute>
+                  <AttributeID>Title Key</AttributeID>
+                  <EstimatedCount>18</EstimatedCount>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>Title Id</AttributeID>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>Title Type</AttributeID>
+                  <EstimatedCount>6</EstimatedCount>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>Title Price</AttributeID>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>Publisher Key</AttributeID>
+                  <EstimatedCount>8</EstimatedCount>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>Publisher Id</AttributeID>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>Date Key</AttributeID>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>Full Date</AttributeID>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>Month</AttributeID>
+                  <EstimatedCount>63</EstimatedCount>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>Quarter</AttributeID>
+                  <EstimatedCount>23</EstimatedCount>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>Year</AttributeID>
+                  <EstimatedCount>8</EstimatedCount>
+                </Attribute>
+              </Attributes>
+            </Dimension>
+            <Dimension>
+              <CubeDimensionID>DimAuthors</CubeDimensionID>
+              <Attributes>
+                <Attribute>
+                  <AttributeID>Author Key</AttributeID>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>Author Id</AttributeID>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>Author State</AttributeID>
+                </Attribute>
+              </Attributes>
+            </Dimension>
+            <Dimension>
+              <CubeDimensionID>DimOrders</CubeDimensionID>
+              <Attributes>
+                <Attribute>
+                  <AttributeID>Order Number</AttributeID>
+                  <EstimatedCount>16</EstimatedCount>
+                </Attribute>
+              </Attributes>
+            </Dimension>
+          </Dimensions>
+          <Aggregations>
+            <Aggregation>
+              <ID>Aggregation 0</ID>
+              <Name>Aggregation 0</Name>
+              <Dimensions>
+                <Dimension>
+                  <CubeDimensionID>DimStores</CubeDimensionID>
+                </Dimension>
+                <Dimension>
+                  <CubeDimensionID>DimDates</CubeDimensionID>
+                </Dimension>
+                <Dimension>
+                  <CubeDimensionID>DimTitles</CubeDimensionID>
+                </Dimension>
+                <Dimension>
+                  <CubeDimensionID>DimAuthors</CubeDimensionID>
+                </Dimension>
+                <Dimension>
+                  <CubeDimensionID>DimOrders</CubeDimensionID>
+                </Dimension>
+              </Dimensions>
+            </Aggregation>
+            <Aggregation>
+              <ID>Aggregation 1</ID>
+              <Name>Aggregation 1</Name>
+              <Dimensions>
+                <Dimension>
+                  <CubeDimensionID>DimStores</CubeDimensionID>
+                  <Attributes>
+                    <Attribute>
+                      <AttributeID>Store Key</AttributeID>
+                    </Attribute>
+                  </Attributes>
+                </Dimension>
+                <Dimension>
+                  <CubeDimensionID>DimDates</CubeDimensionID>
+                </Dimension>
+                <Dimension>
+                  <CubeDimensionID>DimTitles</CubeDimensionID>
+                </Dimension>
+                <Dimension>
+                  <CubeDimensionID>DimAuthors</CubeDimensionID>
+                </Dimension>
+                <Dimension>
+                  <CubeDimensionID>DimOrders</CubeDimensionID>
+                </Dimension>
+              </Dimensions>
+            </Aggregation>
+            <Aggregation>
+              <ID>Aggregation 2</ID>
+              <Name>Aggregation 2</Name>
+              <Dimensions>
+                <Dimension>
+                  <CubeDimensionID>DimStores</CubeDimensionID>
+                </Dimension>
+                <Dimension>
+                  <CubeDimensionID>DimDates</CubeDimensionID>
+                </Dimension>
+                <Dimension>
+                  <CubeDimensionID>DimTitles</CubeDimensionID>
+                  <Attributes>
+                    <Attribute>
+                      <AttributeID>Title Type</AttributeID>
+                    </Attribute>
+                  </Attributes>
+                </Dimension>
+                <Dimension>
+                  <CubeDimensionID>DimAuthors</CubeDimensionID>
+                </Dimension>
+                <Dimension>
+                  <CubeDimensionID>DimOrders</CubeDimensionID>
+                </Dimension>
+              </Dimensions>
+            </Aggregation>
+          </Aggregations>
+        </AggregationDesign>
+      </AggregationDesigns>
+    </MeasureGroup>
+    <MeasureGroup>
+      <ID>Fact Titles Authors</ID>
+      <Partitions>
+        <Partition dwd:design-time-name="268bd67b-d232-42ab-9cb8-b9625abdab40">
+          <ID>Fact Titles Authors</ID>
+          <Name>Fact Titles Authors</Name>
+          <CreatedTimestamp>0001-01-01T08:00:00Z</CreatedTimestamp>
+          <LastSchemaUpdate>0001-01-01T08:00:00Z</LastSchemaUpdate>
+          <LastProcessed>0001-01-01T08:00:00Z</LastProcessed>
+          <State>Unprocessed</State>
+          <Source xsi:type="DsvTableBinding" dwd:design-time-name="ab703a7c-1140-49a6-9f25-e0f00e0417a5">
+            <DataSourceViewID>DWPubsSalesTables</DataSourceViewID>
+            <TableID>dbo_FactTitlesAuthors</TableID>
+          </Source>
+          <StorageMode>Molap</StorageMode>
+          <CurrentStorageMode>Molap</CurrentStorageMode>
+          <ProcessingMode>Regular</ProcessingMode>
+        </Partition>
+      </Partitions>
+    </MeasureGroup>
+  </MeasureGroups>
+</Cube>

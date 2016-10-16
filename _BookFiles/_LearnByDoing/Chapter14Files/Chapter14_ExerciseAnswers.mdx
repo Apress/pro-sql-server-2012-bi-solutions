@@ -1,0 +1,111 @@
+/*** Exercise 14-1: Executing MDX Queries *** 
+ In this exercise, you create a new MDX query similar
+ to the ones we just walked though in chapter 14. 
+ You also write another query that returns 
+ the order quantity for the product 
+ called "Alice Mutton". 
+ Your final results should look similar to Figure 2.
+ *************************************************/
+
+-- Listing 1. Code for the Learn By Doing Exercise 14-1 
+-- Write a Query that returns the Order Qty by Product "Alice Mutton"
+-- Version 1: Using a member's name
+Select 
+{ [Measures].[QuantityOnOrder] } on Columns,
+{[DimProducts].[Product].[Alice Mutton]  } On Rows -- Using the Name
+From [CubeNorthwindOrders]
+GO
+-- Version 2: Using a member's key
+Select 
+{ [Measures].[QuantityOnOrder] } on Columns,
+{ [DimProducts].[Product].&[17] } On Rows -- Using the Key
+From [CubeNorthwindOrders] 
+GO
+
+/*** Exercise 14-2: Returning Multiple Tuples ***
+In this exercise, you write a query that shows 
+the number of SalesQuantity and 
+PriceOnOrder for all customers, 
+all order IDs, and all products. 
+Your final results should look similar to Figure 3.
+ *************************************************/
+-- Listing 2. Code for the Learn By Doing Exercise 14-2 
+SELECT
+ Non Empty{ 
+  ([Measures].[QuantityOnOrder])
+, ([Measures].[PriceOnOrder])
+} ON COLUMNS,
+Non Empty{ 
+  (
+  [DimCustomers].[Customer].[Customer].ALLMEMBERS 
+  * 
+  [DimOrders].[OrderID].[OrderID].ALLMEMBERS
+  * 
+  [DimProducts].[Product].[Product].ALLMEMBERS
+ ) 
+}  ON ROWS 
+FROM [CubeNorthwindOrders]
+
+
+/***  Exercise 14-3: Creating MDX with the Cube Browser ****
+In this exercise, you generate MDX code using the 
+cube browser that comes with SSAS 2012. 
+You then copy the code to a new MDX code window
+, review the code, and remove nonuseful clauses 
+and properties. 
+ *************************************************/
+ -- Listing 3. The Automatically Generated MDX Code
+SELECT NON EMPTY { [Measures].[QuantityOnOrder], [Measures].[PriceOnOrder] } ON COLUMNS, NON EMPTY { ([DimCustomers].[Customer].[Customer].ALLMEMBERS * [DimOrders].[OrderID].[OrderID].ALLMEMBERS * [DimProducts].[Product].[Product].ALLMEMBERS ) } DIMENSION PROPERTIES MEMBER_CAPTION, MEMBER_UNIQUE_NAME ON ROWS FROM ( SELECT ( { [DimCustomers].[Customer].&[1] } ) ON COLUMNS FROM [CubeNorthwindOrders]) CELL PROPERTIES VALUE, BACK_COLOR, FORE_COLOR, FORMATTED_VALUE, FORMAT_STRING, FONT_NAME, FONT_SIZE, FONT_FLAGS 
+
+-- Listing 4. Reformatting the Automatically Generated MDX Code 
+SELECT 
+NON EMPTY { 
+  [Measures].[QuantityOnOrder]
+, [Measures].[PriceOnOrder] 
+} ON COLUMNS, 
+NON EMPTY { 
+(
+ [DimCustomers].[Customer].[Customer].ALLMEMBERS
+ * 
+ [DimOrders].[OrderID].[OrderID].ALLMEMBERS 
+ * 
+ [DimProducts].[Product].[Product].ALLMEMBERS 
+ ) 
+ } DIMENSION PROPERTIES MEMBER_CAPTION
+ , MEMBER_UNIQUE_NAME 
+   ON ROWS 
+ FROM  ( 
+ SELECT ( { [DimCustomers].[Customer].&[1] } ) ON COLUMNS 
+ FROM [CubeNorthwindOrders]) 
+   CELL PROPERTIES VALUE
+ , BACK_COLOR
+ , FORE_COLOR
+ , FORMATTED_VALUE
+ , FORMAT_STRING
+ , FONT_NAME
+ , FONT_SIZE
+ , FONT_FLAGS
+
+
+-- Listing 5. Reformatting the Automatically Generated MDX Code 
+SELECT 
+NON EMPTY { 
+  [Measures].[QuantityOnOrder]
+, [Measures].[PriceOnOrder] 
+} ON COLUMNS, 
+NON EMPTY { 
+(
+ [DimCustomers].[Customer].[Customer].ALLMEMBERS
+ * 
+ [DimOrders].[OrderID].[OrderID].ALLMEMBERS 
+ * 
+ [DimProducts].[Product].[Product].ALLMEMBERS 
+ ) 
+ }   ON ROWS 
+ FROM  ( 
+   SELECT ( 
+   { [DimCustomers].[Customer].&[1]  }    
+   ) ON COLUMNS 
+   FROM [CubeNorthwindOrders]) 
+   
+

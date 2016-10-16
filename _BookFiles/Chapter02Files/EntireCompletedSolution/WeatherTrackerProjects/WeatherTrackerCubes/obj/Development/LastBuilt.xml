@@ -1,0 +1,149 @@
+﻿<Infos>
+  <Item name="WeatherTrackerCubes.database">
+    <Time>634515194825462421</Time>
+    <Hash length="16">
+      <b>8</b>
+      <b>237</b>
+      <b>215</b>
+      <b>42</b>
+      <b>184</b>
+      <b>246</b>
+      <b>107</b>
+      <b>189</b>
+      <b>113</b>
+      <b>81</b>
+      <b>90</b>
+      <b>117</b>
+      <b>161</b>
+      <b>191</b>
+      <b>214</b>
+      <b>126</b>
+    </Hash>
+  </Item>
+  <Item name="DWWeatherTracker.dsv">
+    <Time>634515870876790345</Time>
+    <Hash length="16">
+      <b>123</b>
+      <b>250</b>
+      <b>249</b>
+      <b>148</b>
+      <b>72</b>
+      <b>217</b>
+      <b>194</b>
+      <b>134</b>
+      <b>207</b>
+      <b>84</b>
+      <b>243</b>
+      <b>42</b>
+      <b>42</b>
+      <b>104</b>
+      <b>110</b>
+      <b>255</b>
+    </Hash>
+  </Item>
+  <Item name="DWWeatherTracker.cube">
+    <Time>634515943774589860</Time>
+    <Hash length="16">
+      <b>176</b>
+      <b>105</b>
+      <b>237</b>
+      <b>194</b>
+      <b>53</b>
+      <b>5</b>
+      <b>202</b>
+      <b>46</b>
+      <b>214</b>
+      <b>172</b>
+      <b>29</b>
+      <b>125</b>
+      <b>3</b>
+      <b>215</b>
+      <b>200</b>
+      <b>255</b>
+    </Hash>
+  </Item>
+  <Item name="DimDate.dim">
+    <Time>634515871410020844</Time>
+    <Hash length="16">
+      <b>180</b>
+      <b>165</b>
+      <b>206</b>
+      <b>57</b>
+      <b>65</b>
+      <b>3</b>
+      <b>90</b>
+      <b>134</b>
+      <b>131</b>
+      <b>103</b>
+      <b>186</b>
+      <b>237</b>
+      <b>144</b>
+      <b>226</b>
+      <b>144</b>
+      <b>227</b>
+    </Hash>
+  </Item>
+  <Item name="DWWeatherTracker.ds">
+    <Time>634516023104567275</Time>
+    <Hash length="16">
+      <b>166</b>
+      <b>169</b>
+      <b>160</b>
+      <b>86</b>
+      <b>251</b>
+      <b>142</b>
+      <b>179</b>
+      <b>250</b>
+      <b>75</b>
+      <b>33</b>
+      <b>117</b>
+      <b>169</b>
+      <b>49</b>
+      <b>145</b>
+      <b>109</b>
+      <b>171</b>
+    </Hash>
+  </Item>
+  <Item name="DimEvents.dim">
+    <Time>634515870876060303</Time>
+    <Hash length="16">
+      <b>78</b>
+      <b>27</b>
+      <b>195</b>
+      <b>193</b>
+      <b>39</b>
+      <b>59</b>
+      <b>215</b>
+      <b>94</b>
+      <b>180</b>
+      <b>25</b>
+      <b>14</b>
+      <b>58</b>
+      <b>5</b>
+      <b>243</b>
+      <b>36</b>
+      <b>237</b>
+    </Hash>
+  </Item>
+  <Item name="DWWeatherTracker.partitions">
+    <Time>634515943774879877</Time>
+    <Hash length="16">
+      <b>32</b>
+      <b>219</b>
+      <b>111</b>
+      <b>83</b>
+      <b>1</b>
+      <b>223</b>
+      <b>49</b>
+      <b>248</b>
+      <b>108</b>
+      <b>172</b>
+      <b>252</b>
+      <b>218</b>
+      <b>86</b>
+      <b>211</b>
+      <b>105</b>
+      <b>231</b>
+    </Hash>
+  </Item>
+</Infos>

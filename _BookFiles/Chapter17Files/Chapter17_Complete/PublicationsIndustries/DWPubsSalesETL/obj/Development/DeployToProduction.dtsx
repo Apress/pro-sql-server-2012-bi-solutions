@@ -1,0 +1,306 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="3/22/2012 11:27:02 AM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="RSLAPTOP2"
+  DTS:CreatorName="RSLaptop2\Administrator"
+  DTS:DTSID="{991A99E6-480E-42BC-8B0C-2492E70FE852}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.2100.60"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="DeployToProduction"
+  DTS:PackageType="5"
+  DTS:VersionBuild="11"
+  DTS:VersionGUID="{CDD9B00E-4828-45C6-8477-D1EEB4FFFDFE}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[(local)\SQL2012]"
+      DTS:CreationName="MSOLAP100"
+      DTS:DTSID="{D8D7875B-A692-42E4-950B-F83EDC650CB4}"
+      DTS:ObjectName="(local)\SQL2012">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=(local)\SQL2012;Provider=MSOLAP.5;Integrated Security=SSPI;Impersonation Level=Impersonate;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[(local)\SQL2012.master]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{FBED8736-E861-46ED-9797-1DB0A549FB0F}"
+      DTS:ObjectName="(local)\SQL2012.master">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=(local)\SQL2012;Initial Catalog=master;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ETLProcessForDWPubsSales.dtsx]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{EA953030-60CD-4B10-BEAD-178303B74F88}"
+      DTS:ObjectName="ETLProcessForDWPubsSales.dtsx">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="\\RSLAPTOP2\PubsBIProdFiles\ETLProcessForDWPubsSales.dtsx" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{546927C8-24E1-4884-988F-3EE68CC77FC7}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{FBED8736-E861-46ED-9797-1DB0A549FB0F}"
+          SQLTask:SqlStatementSource="Create proc test1&#xA;as &#xA;'test'&#xA;Go&#xA;Create proc test2&#xA;as &#xA;'test2'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load DWPubsSales Execute Package Task"
+      DTS:CreationName="SSIS.ExecutePackageTask.3"
+      DTS:Description="Execute Package Task"
+      DTS:DTSID="{C0A2A9A3-1103-45CF-9ECD-6B4F4DFAE465}"
+      DTS:ExecutableType="SSIS.ExecutePackageTask.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load DWPubsSales Execute Package Task"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <Connection>{EA953030-60CD-4B10-BEAD-178303B74F88}</Connection>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Restore Database Analysis Services Execute DDL Task"
+      DTS:CreationName="Microsoft.DataTransformationServices.Tasks.DTSProcessingTask.ASExecuteDDLTask, Microsoft.SqlServer.ASTasks, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Analysis Services Execute DDL Task"
+      DTS:DTSID="{0B9B4389-BE8D-4D09-83AE-A0CE810EF6FC}"
+      DTS:ExecutableType="Microsoft.DataTransformationServices.Tasks.DTSProcessingTask.ASExecuteDDLTask, Microsoft.SqlServer.ASTasks, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Restore Database Analysis Services Execute DDL Task"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ASDdlData
+          ConnectionName="(local)\SQL2012"
+          SourceType="DirectInput"
+          Source="&lt;Restore xmlns=&quot;http://schemas.microsoft.com/analysisservices/2003/engine&quot;&gt;&#xA;  &lt;File&gt;\\RSLAPTOP2\PubsBIProdFiles\PubsBICubes.abf&lt;/File&gt;&#xA;  &lt;DatabaseName&gt;PubsBICubes&lt;/DatabaseName&gt;&#xA;  &lt;AllowOverwrite&gt;true&lt;/AllowOverwrite&gt;&#xA;  &lt;Security&gt;IgnoreSecurity&lt;/Security&gt;&#xA;&lt;/Restore&gt;" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Restore DWPubsSales Execute SQL Task"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{7408159A-ABFF-4A56-86CC-C1514A29DEA0}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Restore DWPubsSales Execute SQL Task"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server &quot;2012&quot; RC0; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{FBED8736-E861-46ED-9797-1DB0A549FB0F}"
+          SQLTask:SqlStatementSource="IF  EXISTS (SELECT name FROM sys.databases WHERE name = N'DWPubsSales')&#xA;  BEGIN&#xA;  -- If they do, they need to close connections to the DWPubsSales database, with this code!&#xA;    ALTER DATABASE [DWPubsSales] SET SINGLE_USER WITH ROLLBACK IMMEDIATE&#xA;  END&#xA;&#xA;-- Now now restore the Empty database...&#xA;USE Master &#xA;RESTORE DATABASE [DWPubsSales] &#xA;FROM DISK = &#xA;N'C:\_BISolutions\PublicationsIndustries\DWPubsSales\DWPubsSales_BeforeETL.bak'&#xA;WITH REPLACE&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Upload Report Execute Process Task"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteProcess.ExecuteProcess, Microsoft.SqlServer.ExecProcTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute Process Task"
+      DTS:DTSID="{C5A2A010-536B-4BF4-A6F4-AE4C92286C7E}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteProcess.ExecuteProcess, Microsoft.SqlServer.ExecProcTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Upload Report Execute Process Task"
+      DTS:TaskContact="Execute Process Task;Microsoft Corporation; SQL Server &quot;2012&quot; RC0; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecuteProcessData
+          Executable="C:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\RS.exe"
+          Arguments=" -i \\RSLAPTOP2\PubsBIProdFiles\DeploySalesByTitles.rss -s https://rslaptop2/ReportServer/ReportServer"
+          FailTaskIfReturnCodeIsNotSuccessValue="False" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{D2FF675D-B672-4107-898C-0E7DDE02CA0F}"
+      DTS:From="Package\Restore DWPubsSales Execute SQL Task"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Load DWPubsSales Execute Package Task" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{4B0D4B2C-0CD8-4998-A611-88FBBCAE86F5}"
+      DTS:From="Package\Load DWPubsSales Execute Package Task"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Restore Database Analysis Services Execute DDL Task" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{20C6E7C7-05BF-475D-87C9-1C47A0E624AD}"
+      DTS:From="Package\Restore Database Analysis Services Execute DDL Task"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Upload Report Execute Process Task" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="329.6,41.6"
+          Id="Package\Load DWPubsSales Execute Package Task"
+          TopLeft="81.4999987706542,117.130437843966" />
+        <NodeLayout
+          Size="400,41.6"
+          Id="Package\Restore Database Analysis Services Execute DDL Task"
+          TopLeft="77.7499988265336,199.652179112957" />
+        <NodeLayout
+          Size="320,41.6"
+          Id="Package\Restore DWPubsSales Execute SQL Task"
+          TopLeft="68.3749989662319,35.1739139809275" />
+        <NodeLayout
+          Size="299.2,41.6"
+          Id="Package\Upload Report Execute Process Task"
+          TopLeft="174.624997382984,295.173920718844" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="228.374998966232,76.7739139809275">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="17.9249998044223,40.356523863039"
+              Start="0,0"
+              End="17.9249998044223,32.856523863039">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.1782619315195" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.1782619315195"
+                    Point2="0,20.1782619315195"
+                    Point3="4,20.1782619315195" />
+                  <mssgle:LineSegment
+                    End="13.9249998044223,20.1782619315195" />
+                  <mssgle:CubicBezierSegment
+                    Point1="13.9249998044223,20.1782619315195"
+                    Point2="17.9249998044223,20.1782619315195"
+                    Point3="17.9249998044223,24.1782619315195" />
+                  <mssgle:LineSegment
+                    End="17.9249998044223,32.856523863039" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="246.299998770654,158.730437843966">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="31.4500000558793,40.9217412689909"
+              Start="0,0"
+              End="31.4500000558793,33.4217412689909">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.4608706344954" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.4608706344954"
+                    Point2="0,20.4608706344954"
+                    Point3="4,20.4608706344954" />
+                  <mssgle:LineSegment
+                    End="27.4500000558793,20.4608706344954" />
+                  <mssgle:CubicBezierSegment
+                    Point1="27.4500000558793,20.4608706344954"
+                    Point2="31.4500000558793,20.4608706344954"
+                    Point3="31.4500000558793,24.4608706344954" />
+                  <mssgle:LineSegment
+                    End="31.4500000558793,33.4217412689909" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="277.749998826534,241.252179112957">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="46.4749985564501,53.9217416058867"
+              Start="0,0"
+              End="46.4749985564501,46.4217416058867">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.9608708029433" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22.9608708029433"
+                    Point2="0,26.9608708029433"
+                    Point3="4,26.9608708029433" />
+                  <mssgle:LineSegment
+                    End="42.4749985564501,26.9608708029433" />
+                  <mssgle:CubicBezierSegment
+                    Point1="42.4749985564501,26.9608708029433"
+                    Point2="46.4749985564501,26.9608708029433"
+                    Point3="46.4749985564501,30.9608708029433" />
+                  <mssgle:LineSegment
+                    End="46.4749985564501,46.4217416058867" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="184,41.6"
+          Id="Package\Execute SQL Task"
+          TopLeft="494.199992623925,49.3913056485369" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <ConnectionManager
+    design-time-name="Package.ConnectionManagers[(local)\SQL2012]">
+    <ProjectReferenceName></ProjectReferenceName>
+  </ConnectionManager>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

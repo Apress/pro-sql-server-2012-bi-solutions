@@ -1,0 +1,63 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionDocuments", "SolutionDocuments", "{BA2DE36A-24A4-43E9-8825-168BBD85D3E6}"
+	ProjectSection(SolutionItems) = preProject
+		SQLTransformations.sql = SQLTransformations.sql
+		WeatherHistory.txt = WeatherHistory.txt
+		WeatherTrackerETLPlan.xls = WeatherTrackerETLPlan.xls
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WeatherTrackerDataWarehouse", "WeatherTrackerDataWarehouse", "{0CCBD709-D0F8-4C74-9280-88C064FB4BDF}"
+	ProjectSection(SolutionItems) = preProject
+		InstWeatherTrackerDW.sql = InstWeatherTrackerDW.sql
+	EndProjectSection
+EndProject
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "WeatherTrackerETL", "WeatherTrackerETL\WeatherTrackerETL.dtproj", "{0D0B66D0-E8E3-47B0-A655-76112B2E8E8E}"
+EndProject
+Project("{D2ABAB84-BF74-430A-B69E-9DC6D40DDA17}") = "WeatherTrackerCubes", "WeatherTrackerCubes\WeatherTrackerCubes.dwproj", "{BEFF024F-770D-45F5-8C79-2504C9ADCEB4}"
+EndProject
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "WeatherTrackerReports", "WeatherTrackerReports\WeatherTrackerReports.rptproj", "{4AA66976-6A7B-45AD-981E-19000A25DC9B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Development|Default = Development|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0D0B66D0-E8E3-47B0-A655-76112B2E8E8E}.Debug|Default.ActiveCfg = Development
+		{0D0B66D0-E8E3-47B0-A655-76112B2E8E8E}.Debug|Default.Build.0 = Development
+		{0D0B66D0-E8E3-47B0-A655-76112B2E8E8E}.DebugLocal|Default.ActiveCfg = Development
+		{0D0B66D0-E8E3-47B0-A655-76112B2E8E8E}.DebugLocal|Default.Build.0 = Development
+		{0D0B66D0-E8E3-47B0-A655-76112B2E8E8E}.Development|Default.ActiveCfg = Development
+		{0D0B66D0-E8E3-47B0-A655-76112B2E8E8E}.Development|Default.Build.0 = Development
+		{0D0B66D0-E8E3-47B0-A655-76112B2E8E8E}.Release|Default.ActiveCfg = Development
+		{0D0B66D0-E8E3-47B0-A655-76112B2E8E8E}.Release|Default.Build.0 = Development
+		{BEFF024F-770D-45F5-8C79-2504C9ADCEB4}.Debug|Default.ActiveCfg = Development
+		{BEFF024F-770D-45F5-8C79-2504C9ADCEB4}.Debug|Default.Build.0 = Development
+		{BEFF024F-770D-45F5-8C79-2504C9ADCEB4}.Debug|Default.Deploy.0 = Development
+		{BEFF024F-770D-45F5-8C79-2504C9ADCEB4}.DebugLocal|Default.ActiveCfg = Development
+		{BEFF024F-770D-45F5-8C79-2504C9ADCEB4}.DebugLocal|Default.Build.0 = Development
+		{BEFF024F-770D-45F5-8C79-2504C9ADCEB4}.DebugLocal|Default.Deploy.0 = Development
+		{BEFF024F-770D-45F5-8C79-2504C9ADCEB4}.Development|Default.ActiveCfg = Development
+		{BEFF024F-770D-45F5-8C79-2504C9ADCEB4}.Development|Default.Build.0 = Development
+		{BEFF024F-770D-45F5-8C79-2504C9ADCEB4}.Development|Default.Deploy.0 = Development
+		{BEFF024F-770D-45F5-8C79-2504C9ADCEB4}.Release|Default.ActiveCfg = Development
+		{BEFF024F-770D-45F5-8C79-2504C9ADCEB4}.Release|Default.Build.0 = Development
+		{BEFF024F-770D-45F5-8C79-2504C9ADCEB4}.Release|Default.Deploy.0 = Development
+		{4AA66976-6A7B-45AD-981E-19000A25DC9B}.Debug|Default.ActiveCfg = DebugLocal
+		{4AA66976-6A7B-45AD-981E-19000A25DC9B}.Debug|Default.Build.0 = DebugLocal
+		{4AA66976-6A7B-45AD-981E-19000A25DC9B}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{4AA66976-6A7B-45AD-981E-19000A25DC9B}.DebugLocal|Default.Build.0 = DebugLocal
+		{4AA66976-6A7B-45AD-981E-19000A25DC9B}.Development|Default.ActiveCfg = DebugLocal
+		{4AA66976-6A7B-45AD-981E-19000A25DC9B}.Development|Default.Build.0 = DebugLocal
+		{4AA66976-6A7B-45AD-981E-19000A25DC9B}.Release|Default.ActiveCfg = Release
+		{4AA66976-6A7B-45AD-981E-19000A25DC9B}.Release|Default.Build.0 = Release
+		{4AA66976-6A7B-45AD-981E-19000A25DC9B}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

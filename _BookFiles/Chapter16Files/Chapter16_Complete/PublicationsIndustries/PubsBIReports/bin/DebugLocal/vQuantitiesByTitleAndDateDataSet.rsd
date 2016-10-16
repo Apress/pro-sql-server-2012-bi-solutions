@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition">
+  <DataSet Name="">
+    <Query>
+      <DataSourceReference>DWPubsSalesDataSource</DataSourceReference>
+      <CommandText>SELECT    
+    PublisherName 
+  , [Title] 
+  , [TitleId] 
+  , [OrderDate] 
+  , [Total for that Date by Title]
+ FROM vQuantitiesByTitleAndDate
+</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="PublisherName">
+        <DataField>PublisherName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Title">
+        <DataField>Title</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="TitleId">
+        <DataField>TitleId</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="OrderDate">
+        <DataField>OrderDate</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Total_for_that_Date_by_Title">
+        <DataField>Total for that Date by Title</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

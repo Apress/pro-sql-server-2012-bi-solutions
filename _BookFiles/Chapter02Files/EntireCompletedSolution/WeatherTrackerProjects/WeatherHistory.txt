@@ -1,0 +1,6 @@
+Date	Max TemperatureF	Min TemperatureF	Events
+1/23/2011	48	43	Rain
+1/24/2011	51	46	Rain
+1/25/2011	52	38	Rain/Sun
+1/26/2011	53	41	Rain/Sun
+1/27/2011	50	37	Fog

@@ -1,0 +1,45 @@
+﻿'
+' Deploy SSRS Report'
+' Sample Command Line:' 
+' rs -i deploy_report.rss 
+'    -s http://<server>/reportserver
+'    -v PATH="C:\\Projects\\OperationsDataMart\\SSRS\\"
+'    -v REPORT="SalesByTitles.rdl"
+'    -v FOLDER="/PubsBIReport"
+'
+' PATH is the folder on the local hard drive where the report .rdl file exists.  
+' You must use \\'   for every backslash in the path; 
+' you must have a trailing backslash (to make this script' simpler)    
+'
+' REPORT is the file name of the report; do not include the .RDL extension'
+' FOLDER is the folder name to deploy to on the report server; 
+' it must already exist
+'
+Dim strPath = "\\RSLAPTOP2\PubsBIProdFiles\"
+Dim strReportName = "SalesByTitles"
+Dim strWebSiteFolder = "/PubsBIReport"
+
+Dim arrRDLCode As [Byte]() = Nothing
+Dim arrWarnings As Warning() = Nothing
+Public Sub Main()
+    Try
+        'Read the RDL code out of the file.
+        Dim stream As FileStream = File.OpenRead(strPath + strReportName + ".rdl")
+        arrRDLCode = New [Byte](stream.Length) {}
+        stream.Read(arrRDLCode, 0, CInt(stream.Length))
+        stream.Close()
+
+        'Upload the RDL code to the Web Service
+        arrWarnings = rs.CreateReport(strReportName, strWebSiteFolder, True, arrRDLCode, Nothing)
+        If Not (arrWarnings Is Nothing) Then
+            Dim objWarning As Warning
+            For Each objWarning In arrWarnings
+                Console.WriteLine(objWarning.Message)
+            Next objWarning
+        Else
+            Console.WriteLine("Report: {0} published successfully with no warnings", REPORT)
+        End If
+    Catch e As IOException
+        Console.WriteLine(e.Message)
+    End Try
+End Sub
